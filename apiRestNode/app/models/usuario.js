@@ -2,6 +2,16 @@ const Model = require('./model')
 
 class Usuario extends Model{
 
+    constructor(){
+        super()
+        this.setSqlQuery()
+        this.campos = ['cdUsuario','nmUsuario','dsSenha','dsEmail','cdPermissao','cdStatus']
+    }
+
+    setSqlQuery(){
+        this._sqlQuery = 'select cdUsuario,nmUsuario,dsEmail,cdPermissao,cdStatus from usuario'
+    }
+
     async checarCredencial(req){
         try{
             

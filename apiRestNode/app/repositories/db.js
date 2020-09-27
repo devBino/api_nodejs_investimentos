@@ -13,6 +13,7 @@ class Db extends Connection{
                 
                 this._con.query(sql,params,(error,result)=>{
                     if(error){
+                        console.log(error)
                         reject({data:undefined,message:'Erro, consulta no banco de dados interrompida...',success:false})
                     }else{
                         resolve({data:result,message:'Consulta executada com sucesso',success:true})

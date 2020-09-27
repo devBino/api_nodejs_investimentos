@@ -1,28 +1,29 @@
 const Model = require('./model')
 
-class TipoAivo extends Model{
+class Ativo extends Model{
     
     constructor(){
         super()
         this.setSqlQuery()
         this.setSqlInsert()
-        this.setSqlDelete()
-        this.campos = ['cdTipo','nmTipo','cdStatus']
+        this.seSqlDelete()
+        this.campos = ['cdAtivo','nmAtivo','vlAtivo','cdTipo','cdStatus']
     }
 
     setSqlQuery(){
-        this._sqlQuery = 'select * from tipo_ativo'
+        this._sqlQuery = 'select * from ativo'
     }
 
     setSqlInsert(){
-        this._sqlInsert = `insert into tipo_ativo set ?`
+        this._sqlInsert = 'insert into ativo set ?'
     }
-    setSqlDelete(){
-        this._sqlDelete = `delete from tipo_ativo where cdTipo=<id>`
+
+    seSqlDelete(){
+        this._sqlDelete = 'delete from ativo where cdAtivo=<id>'
     }
-    
+
     async prepareUpdate(params){
-        this._sqlUpdate = `update tipo_ativo set <set> where <where>`
+        this._sqlUpdate = `update ativo set <set> where <where>`
         var arrSet = []
 
         Object.keys(params).forEach(function(item){
@@ -37,7 +38,7 @@ class TipoAivo extends Model{
             }
         })
 
-        var strWhere = `cdTipo=${params.id}`
+        var strWhere = `cdAtivo=${params.id}`
         var strArrSet = arrSet.toLocaleString()
         
         this._sqlUpdate = this._sqlUpdate.replace("<set>",strArrSet)
@@ -46,8 +47,7 @@ class TipoAivo extends Model{
         return await this.alterar()
     }
 
-    
 
 }
 
-module.exports = new TipoAivo()
+module.exports = new Ativo()

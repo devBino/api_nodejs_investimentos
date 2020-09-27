@@ -1,16 +1,12 @@
 const httpCodes     = require('../repositories/httpCodes')
 const paramsSql     = require('../repositories/parametrosSql')
-const mdTipoAtivo   = require('../models/tipoAtivo')
+const mdAtivo       = require('../models/ativo')
 
-class TipoAtivo{
-
-    constructor(){
-
-    }
+class Ativo{
 
     async listar(req,res){
         try{
-            let lista = await mdTipoAtivo.listar()
+            let lista = await mdAtivo.listar()
             httpCodes.response(lista,200,res)
         }catch(e){
             httpCodes.responseErro(res)
@@ -20,8 +16,8 @@ class TipoAtivo{
     async salvar(req,res){
         try{
             let params      = await paramsSql.limpar(req.body)
-            let resultAcao  = await mdTipoAtivo.salvar(params.params)
-            
+            let resultAcao  = await mdAtivo.salvar(params.params)
+
             httpCodes.response(resultAcao,200,res)
         }catch(e){
             httpCodes.responseErro(res)
@@ -31,7 +27,7 @@ class TipoAtivo{
     async deletar(req,res){
         try{
             let params      = await paramsSql.limpar(req.params)
-            let resultAcao  = await mdTipoAtivo.deletar(params.params.id)
+            let resultAcao  = await mdAtivo.deletar(params.params.id)
 
             httpCodes.response(resultAcao,200,res)
         }catch(e){
@@ -42,7 +38,7 @@ class TipoAtivo{
     async alterar(req,res){
         try{
             let params      = await paramsSql.limpar(req.body)
-            let resultAcao  = await mdTipoAtivo.prepareUpdate(params.params)
+            let resultAcao  = await mdAtivo.prepareUpdate(params.params)
 
             httpCodes.response(resultAcao,200,res)
         }catch(e){
@@ -50,6 +46,7 @@ class TipoAtivo{
         }
     }
 
+
 }
 
-module.exports = new TipoAtivo()
+module.exports = new Ativo()

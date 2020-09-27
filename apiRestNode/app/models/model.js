@@ -5,15 +5,16 @@ class Model{
     constructor(){
         this._Db = Db
         this._erroQuery = {data:undefined,message:'Erro ao tentar executar Query...',success:false}
+        this._sqlQuery  = null
         this._sqlInsert = null
         this._sqlDelete = null
         this._sqlUpdate = null
         this._nomeBanco = 'ativos'
     }
 
-    async listar(sql){
+    async listar(){
         try{
-            let returnDados = await Db.executeQuery(sql)
+            let returnDados = await Db.executeQuery(this._sqlQuery)
             return returnDados
         }catch(e){
             return this._erroQuery
@@ -21,7 +22,7 @@ class Model{
     }
 
     async salvar(params){
-        try{            
+        try{
             let resultAcao = await Db.executeQuery(this._sqlInsert,this._nomeBanco,params)
             return resultAcao
         }catch(e){

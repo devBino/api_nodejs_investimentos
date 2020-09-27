@@ -35,6 +35,7 @@ create table ativo(
     nmAtivo varchar(155) unique not null,
     vlAtivo decimal(12,2) not null,
     cdTipo int not null,
+    cdStatus enum('1','2') default '1',
 
     foreign key(cdTipo) references tipo_ativo(cdTipo),
     primary key(cdAtivo)
