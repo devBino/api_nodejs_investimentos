@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 class Home{
 
     public function home(){
-        return view('template.template');
+        return view('home.login');
     }
 
 }
