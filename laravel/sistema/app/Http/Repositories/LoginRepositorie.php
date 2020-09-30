@@ -27,9 +27,9 @@ class LoginRepositorie{
             
             $response = ConsultaApi::consultar();
 
-            return ['response'=>$response,'params'=>self::$params,'success'=>true];
+            return ['response'=>$response,'params'=>self::$params,'erro'=>false];
         }catch(Exception $e){
-            return ['response'=>[],'success'=>true];
+            return ['response'=>[],'erro'=>true];
         }
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -41,10 +42,20 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            
+            $files = File::allFiles(base_path('routes/sistema'));
+
+            
+            
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
+
+            foreach($files as $file){
+                Route::namespace($this->namespace)
+                    ->group(base_path('routes/sistema/'.$file->getFilename()));
+            }
 
             Route::middleware('web')
                 ->namespace($this->namespace)

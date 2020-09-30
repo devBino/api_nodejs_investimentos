@@ -87,7 +87,7 @@ class ConsultaApi{
         curl_close($curl);
 
         if ($err) {
-            $return = ['msg'=>$err];
+            $return = ['msg'=>$err,'success'=>false];
         } else {
             $return = ['success'=>true,'msg'=>'Curl Executada com sucesso!','response'=>$response];
         }

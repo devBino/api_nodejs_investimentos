@@ -8,7 +8,7 @@ class Home{
 
     public function home(){
         if( session()->has('autenticado') ){
-            return redirect('/sistema');
+            return view('sistema.index');
         }else{
             return view('home.login');
         }
