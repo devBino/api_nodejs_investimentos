@@ -11,13 +11,13 @@ class Autenticacao{
             let dadosToken      = await token.gerar(dadosUsuario.data)
             
             if( dadosToken.token == undefined ){
-                res.status(401).json({message:'Não é possível autenticar com os parâmetros enviados...'})
+                res.status(401).json({message:'Não é possível autenticar com os parâmetros enviados...',auth:false})
             }
 
             res.status(200).json(dadosToken)
 
         }catch(e){
-            res.send({data:[],messagem:'Erro ao tentar autenticar',success:false})
+            res.send({data:[],messagem:'Erro ao tentar autenticar',auth:false})
         }
     }
 

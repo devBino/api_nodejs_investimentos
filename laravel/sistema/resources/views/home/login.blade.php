@@ -44,7 +44,7 @@
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="cpUsuario" name="usuario" aria-describedby="usuarioHelp" placeholder="Digite seu Usuário..." autocomplete="off">
+                      <input type="text" class="form-control form-control-user" id="cpUsuario" name="usuario" aria-describedby="usuarioHelp" placeholder="Digite seu Usuário..." autocomplete="off" autofocus="true">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="cdSenha" name="senha" placeholder="Digite sua Senha">
