@@ -14,5 +14,6 @@
 
   <!-- Custom styles for this template-->
   <link rel="stylesheet" href="{{asset('/css/sb-admin-2.min.css')}}">
+  <link href="{{asset('/tema/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
 </head>
