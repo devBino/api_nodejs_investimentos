@@ -16,18 +16,22 @@
         <!-- Form Register -->
         <div class="row">
             <div class="col-lg-12 d-lg-block">
-                <form action="/tipos-ativos-salvar" method="post">
+                <form method="post" action="/tipo-ativos-salvar">
+                    
+                    <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                    <input type="hidden" name="id" id="id" value="">
+
                     <div class="p-5">
-                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                    
                         <div class="form-group row">
                             <div class="col-sm-2 mb-3 mb-sm-0">    
                                 <label for="nomeAtivo">Ativo</label>
                             </div>
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="text" name="nomeAtivo" id="nomeAtivo" class="form-control form-control-user" placeholder="Ex Renda Fixa">
+                                <input type="text" name="cpNomeTipo" id="cpNomeTipo" class="form-control form-control-user" placeholder="Ex Renda Fixa" required autofocus="true">
                             </div>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <button class="btn btn-success btn-sm bt-novo"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-success btn-sm bt-novo"><i class="fas fa-check"></i></button>
                             </div>
                         </div>
                     </div>    
@@ -54,12 +58,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Renda Fixa</td>
-                                        <td><center><span class="btn btn-info btn-sm bt-editar"><i class="fas fa-edit"></i></span></center></td>
-                                        <td><center><a href="/tipos-ativos-deletar/1" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a></center></td>
-                                    </tr>
+                                
+                                    @if( isset($data['tipos']) &&  count($data['tipos']) )
+                                        @foreach($data['tipos'] as $num => $val)
+                                            
+                                            @php
+                                                $dataDados = [];
+                                                $dataDados[] = $val->cdTipo;
+                                                $dataDados[] = $val->nmTipo;
+                                                $strDataDados = implode(",",$dataDados);
+                                            @endphp
+
+                                            <tr>
+                                                <td>{{$val->cdTipo}}</td>
+                                                <td>{{$val->nmTipo}}</td>
+                                                <td><center><span class="btn btn-info btn-sm bt-editar" data-dados="{{$strDataDados}}"><i class="fas fa-edit"></i></span></center></td>
+                                                <td><center><a href="/tipo-ativos-deletar/{{$val->cdTipo}}" class="btn btn-danger btn-sm bt-deletar"><i class="fas fa-trash"></i></a></center></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -70,5 +87,7 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+
+<script src="{{asset('/js/sistema/tipoAtivos.js')}}"></script>
 
 @stop

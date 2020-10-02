@@ -2,6 +2,7 @@
 namespace App\Http\Repositories;
 
 use App\Http\Repositories\ConsultaApi;
+use Illuminate\Support\Facades\Redis;
 
 class LoginRepositorie{
     
@@ -23,6 +24,7 @@ class LoginRepositorie{
             $strParamsUrl = implode("/",self::$params);
             
             ConsultaApi::setUrl("http://localhost:3000/autenticacao/".$strParamsUrl);
+            ConsultaApi::headers("content-type:application/json");
             ConsultaApi::setMetodo("GET");
             
             $response = ConsultaApi::consultar();
@@ -30,6 +32,17 @@ class LoginRepositorie{
             return ['response'=>$response,'params'=>self::$params,'erro'=>false];
         }catch(Exception $e){
             return ['response'=>[],'erro'=>true];
+        }
+    }
+
+    public static function getTokenRedis(){
+        try{
+            $dadosSessao    = session()->get('autenticado');
+            $dadosRedis     = unserialize(Redis::get($dadosSessao['usuario']."_token"));
+            
+            return $dadosRedis['token'];
+        }catch(Exception $e){
+            return null;
         }
     }
 

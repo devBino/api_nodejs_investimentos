@@ -29,7 +29,7 @@
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
-  <a class="nav-link collapsed" href="/tipos-ativos">
+  <a class="nav-link collapsed" href="/tipo-ativos">
     <i class="fas fa-list"></i>
     <span>Tipos - Ativos</span>
   </a>
