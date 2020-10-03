@@ -5,6 +5,10 @@ use App\Http\Models\TipoAtivoData;
 use Illuminate\Http\Request;
 
 class TipoAtivo{
+
+    public function __construct(){
+        TipoAtivoData::setParams();
+    }
     
     public function index(){
         $data['tipos'] = TipoAtivoData::listar()['response'];

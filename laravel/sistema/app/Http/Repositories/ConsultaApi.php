@@ -38,6 +38,12 @@ class ConsultaApi{
         array_push(self::$headers, $param);
     }
 
+    /**
+     * @example ConsultaApi::cleanHeaders() 
+    */
+    public static function cleanHeaders(){
+        self::$headers = array();
+    }
 
 
     /**
@@ -152,7 +158,7 @@ class ConsultaApi{
     public static function executeGET(){
         
         self::headers();
-
+        
         $curl = curl_init();
         
         curl_setopt_array($curl,array(

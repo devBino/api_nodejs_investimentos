@@ -6,7 +6,7 @@
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Tipos de Ativos</h1>
+    <h1 class="h3 mb-0 text-gray-800">Cadastro de Tipos de Ativos Financeiros</h1>
 </div>
 
 <!-- Content Row -->
@@ -25,10 +25,10 @@
                     
                         <div class="form-group row">
                             <div class="col-sm-2 mb-3 mb-sm-0">    
-                                <label for="nomeAtivo">Ativo</label>
+                                <label for="cpNomeTipo">Tipo Ativo</label>
                             </div>
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="text" name="cpNomeTipo" id="cpNomeTipo" class="form-control form-control-user" placeholder="Ex Renda Fixa" required autofocus="true">
+                                <input type="text" name="cpNomeTipo" id="cpNomeTipo" class="form-control form-control-sm" placeholder="Ex Renda Fixa" required autofocus="true"  autocomplete="off">
                             </div>
                             <div class="col-sm-4 mb-3 mb-sm-0">
                                 <button class="btn btn-success btn-sm bt-novo"><i class="fas fa-check"></i></button>
@@ -45,7 +45,7 @@
             
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Tipos Cadastrados</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Tipos de Ativos Financeiros Cadastrados</h6>
                     </div>                    
                     <div class="card-body">
                         <div class="table-responsive">

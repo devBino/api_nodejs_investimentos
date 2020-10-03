@@ -16,7 +16,14 @@
   <link rel="stylesheet" href="{{asset('/css/sb-admin-2.min.css')}}">
   <link href="{{asset('/tema/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
+  <!-- Jquery -->
   <script src="{{asset('/tema/jquery/jquery.min.js')}}"></script>
+
+  <!-- Select2 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
   <script src="{{asset('/js/sistema/confirma.js')}}"></script>
+  <script src="{{asset('/js/sistema/aplicaSelect2.js')}}"></script>
 
 </head>

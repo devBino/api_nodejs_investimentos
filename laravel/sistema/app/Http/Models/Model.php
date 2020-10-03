@@ -17,6 +17,10 @@ class Model{
     protected static $params;
     protected static $metodo;
 
+    public static function getUrl(){
+        return self::$url;
+    }
+
     public static function makeParams($paramsRequest,$arrCampos){
         
         $return = [];
@@ -43,6 +47,7 @@ class Model{
     public static function execute(){
         try{
             
+            ConsultaApi::cleanHeaders();
             ConsultaApi::headers('x-access-token:' . LoginRepositorie::getTokenRedis() );
             ConsultaApi::setUrl( self::$url );
 
