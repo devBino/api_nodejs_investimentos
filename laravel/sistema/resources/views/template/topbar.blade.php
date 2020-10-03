@@ -49,7 +49,7 @@
   <li class="nav-item dropdown no-arrow">
     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="mr-2 d-none d-lg-inline text-gray-600 small">Fernando Bino</span>
-      <!-- <img class="img-profile rounded-circle" src="https://avatars2.githubusercontent.com/u/39311684?s=400&u=89f6f53a9ffb5f8e61724a58cbb77800e198c69a&v=4">-->
+      <img class="img-profile rounded-circle" src="https://avatars2.githubusercontent.com/u/39311684?s=400&u=89f6f53a9ffb5f8e61724a58cbb77800e198c69a&v=4">
     </a>
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
