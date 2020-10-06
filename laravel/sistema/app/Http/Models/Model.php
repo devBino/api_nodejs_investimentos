@@ -60,6 +60,10 @@ class Model{
             }
 
             $response = ConsultaApi::consultar();
+                
+            if( !isset($response['response']) ){
+                return ['response'=>[],'erro'=>true];    
+            }
 
             $dataReturn = json_decode($response['response']);
 
