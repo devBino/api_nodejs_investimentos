@@ -5,7 +5,9 @@ let env = {
         password:'senha_host',
         database:'nome_banco_de_dados'
     },
-    jwt:'palavra_passe_token'
+    jwt:'palavra_passe_token',
+    chaveApiCotacoes:'API_KEY' //API KEY em uma API externa usada nesse projeto
+                            //   obter API_KEY EM https://hgbrasil.com/status/finance
 }
 
 module.exports = env
