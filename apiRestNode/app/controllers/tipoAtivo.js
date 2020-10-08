@@ -50,6 +50,17 @@ class TipoAtivo{
         }
     }
 
+    async agrupar(req,res){
+        try{
+            let params      = await paramsSql.limpar(req.params)
+            let lista       = await mdTipoAtivo.agrupar(params);
+
+            httpCodes.response(lista,200,res)
+        }catch(e){
+            httpCodes.responseErro(res)
+        }
+    }
+
 }
 
 module.exports = new TipoAtivo()

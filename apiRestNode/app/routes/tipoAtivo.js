@@ -7,5 +7,6 @@ module.exports = function(app){
     app.post('/tipoAtivos', verificaToken, tipoAtivo.salvar )
     app.delete('/tipoAtivos/:id',verificaToken, tipoAtivo.deletar )
     app.put('/tipoAtivos', verificaToken, tipoAtivo.alterar )
+    app.get('/tipoAtivos-agrupar', verificaToken, tipoAtivo.agrupar)
 
 }

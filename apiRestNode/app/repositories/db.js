@@ -1,4 +1,5 @@
 const Connection = require("./connection");
+const env        = require("../../env");
 
 class Db extends Connection{
     
@@ -19,6 +20,11 @@ class Db extends Connection{
                     }
                 })
             }catch(e){
+                
+                if( env.debug ){
+                    console.error(e)
+                }
+
                 reject({data:undefined,message:'Erro ao tentar executar Query...',success:false})
             }
         })

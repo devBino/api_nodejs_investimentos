@@ -1,4 +1,5 @@
 let env = {
+    debug:true,
     con:{
         host:'nome_host',
         user:'nome_usuario_host',

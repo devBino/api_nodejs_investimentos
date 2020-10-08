@@ -7,6 +7,7 @@ class TipoAivo extends Model{
         this.setSqlQuery()
         this.setSqlInsert()
         this.setSqlDelete()
+        this.setSqlAgrupamento()
         this.campos = ['cdTipo','nmTipo','cdStatus']
     }
 
@@ -19,6 +20,13 @@ class TipoAivo extends Model{
     }
     setSqlDelete(){
         this._sqlDelete = `delete from tipo_ativo where cdTipo=<id>`
+    }
+    setSqlAgrupamento(){
+        this._sqlAgrupamento = `
+            select ta.cdTipo, nmTipo as Tipo,count(cdAtivo) as Total 
+            from tipo_ativo ta join ativo a on a.cdTipo = ta.cdTipo
+            group by ta.cdTipo
+        `
     }
     
     async prepareUpdate(params){
