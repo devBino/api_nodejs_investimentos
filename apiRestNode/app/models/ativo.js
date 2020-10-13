@@ -7,7 +7,7 @@ class Ativo extends Model{
         this.setSqlQuery()
         this.setSqlInsert()
         this.seSqlDelete()
-        this.campos = ['cdAtivo','nmAtivo','vlAtivo','cdTipo','cdStatus']
+        this.campos = ['cdAtivo','nmAtivo','vlAtivo','taxaAmin','taxaCustodia','taxaPerformace','cdTipo','cdStatus']
     }
 
     setSqlQuery(){
