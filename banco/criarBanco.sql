@@ -54,6 +54,7 @@ create table aporte(
     qtde int not null default 1,
     subTotal decimal(12,2) not null,
     dtAporte datetime not null,
+    taxaRetorno decimal(10,4) not null default 0.00,
     cdStatus enum('1','2') default '1',
 
     foreign key(cdAtivo) references ativo(cdAtivo),

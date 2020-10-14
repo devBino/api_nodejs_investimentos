@@ -1,29 +1,29 @@
 const Model = require('./model')
 
-class Ativo extends Model{
+class Aporte extends Model{
     
     constructor(){
         super()
         this.setSqlQuery()
         this.setSqlInsert()
         this.setSqlDelete()
-        this.campos = ['cdAtivo','nmAtivo','vlAtivo','taxaAmin','taxaCustodia','taxaPerformace','cdTipo','cdStatus']
+        this.campos = ['cdAporte','cdAtivo','vlAporte','qtde','subTotal','dtAporte','taxaRetorno','cdStatus']
     }
 
     setSqlQuery(){
-        this._sqlQuery = 'select * from ativo'
+        this._sqlQuery = 'select * from aporte'
     }
 
     setSqlInsert(){
-        this._sqlInsert = 'insert into ativo set ?'
+        this._sqlInsert = 'insert into aporte set ?'
     }
 
     setSqlDelete(){
-        this._sqlDelete = 'delete from ativo where cdAtivo=<id>'
+        this._sqlDelete = 'delete from aporte where cdAporte=<id>'
     }
 
     async prepareUpdate(params){
-        this._sqlUpdate = `update ativo set <set> where <where>`
+        this._sqlUpdate = `update aporte set <set> where <where>`
         var arrSet = []
 
         Object.keys(params).forEach(function(item){
@@ -38,7 +38,7 @@ class Ativo extends Model{
             }
         })
 
-        var strWhere = `cdAtivo=${params.id}`
+        var strWhere = `cdAporte=${params.id}`
         var strArrSet = arrSet.toLocaleString()
         
         this._sqlUpdate = this._sqlUpdate.replace("<set>",strArrSet)
@@ -50,4 +50,4 @@ class Ativo extends Model{
 
 }
 
-module.exports = new Ativo()
+module.exports = new Aporte()
