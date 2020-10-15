@@ -11,7 +11,15 @@ use App\Http\Contracts\ApiRestCrud;
 class AtivoData extends ModelData{
 
     protected static $url       = "http://localhost:3000/ativos";
-    protected static $arrCampos = ['id'=>'id','cpNomeAtivo'=>'nmAtivo','cpValor'=>'vlAtivo','cpTipo'=>'cdTipo'];
+    protected static $arrCampos = [
+        'id'=>'id',
+        'cpNomeAtivo'=>'nmAtivo',
+        'cpValor'=>'vlAtivo',
+        'cpTipo'=>'cdTipo',
+        'cpTaxaAdministracao'=>'taxaAdmin',
+        'cpTaxaCustodia'=>'taxaCustodia',
+        'cpTaxaPerformace'=>'taxaPerformace'
+    ];
 
     public static function setParams(){
         parent::$url        = self::$url;
