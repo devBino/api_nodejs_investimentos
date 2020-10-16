@@ -42,6 +42,17 @@
   </a>
 </li>
 
+<!-- Heading -->
+<div class="sidebar-heading">
+  Cadastro
+</div>
+
+<li class="nav-item">
+  <a class="nav-link collapsed" href="/aportes">
+    <i class="fas fa-hand-holding-usd"></i>
+    <span>Aportes</span>
+  </a>
+</li>
 
 <!-- Divider -->
 <hr class="sidebar-divider">

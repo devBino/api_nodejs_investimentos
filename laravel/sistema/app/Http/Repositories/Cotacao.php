@@ -11,18 +11,7 @@ class Cotacao{
         $return = [];
 
         for( $i=0; $i<count($ativos); $i++ ){
-            
-            $dadosCotacao    = CotacaoData::consultarCotacao($ativos[$i]->nmAtivo);
-            $arrValorCotacao = FiltroArray::filtrarResultadoChaves($dadosCotacao, ['response','results',strtoupper($ativos[$i]->nmAtivo)] );
-
-            $achouPreco = ( !is_null($arrValorCotacao['array']) && count($arrValorCotacao['array']) && isset($arrValorCotacao['array']['price']) );
-
-            $return[] = [
-                'ativo'=>$ativos[$i]->nmAtivo,
-                'cotacao'=> $achouPreco ? $arrValorCotacao['array']['price'] : 0.00,
-                'status'=> $achouPreco ? 'Encontrado' : 'Não Encontrado'
-            ];
-
+            $return[] = self::getCotacao($ativos[$i]->nmAtivo);
         }
 
         return $return;
@@ -35,22 +24,24 @@ class Cotacao{
         $return = [];
 
         for( $i=0; $i<count($ativos); $i++ ){
-            
-            $dadosCotacao    = CotacaoData::consultarCotacao($ativos[$i]);
-            $arrValorCotacao = FiltroArray::filtrarResultadoChaves($dadosCotacao, ['response','results',strtoupper($ativos[$i])] );
-
-            $achouPreco = ( !is_null($arrValorCotacao['array']) && count($arrValorCotacao['array']) && isset($arrValorCotacao['array']['price']) );
-
-            $return[] = [
-                'ativo'=>$ativos[$i],
-                'cotacao'=> $achouPreco ? $arrValorCotacao['array']['price'] : 0.00,
-                'status'=> $achouPreco ? 'Encontrado' : 'Não Encontrado'
-            ];
-
+            $return[] = self::getCotacao($ativos[$i]);
         }
 
         return $return;
 
+    }
+
+    public static function getCotacao($ativo){
+        $dadosCotacao       = CotacaoData::consultarCotacao($ativo);
+        $arrValorCotacao    = FiltroArray::filtrarResultadoChaves($dadosCotacao, ['response','results',strtoupper($ativo)]);
+        
+        $achouPreco = ( !is_null($arrValorCotacao['array']) && count($arrValorCotacao['array']) && isset($arrValorCotacao['array']['price']) );
+
+        return [
+            'ativo'=>$ativo,
+            'cotacao'=> $achouPreco ? $arrValorCotacao['array']['price'] : 0.00,
+            'status'=> $achouPreco ? 'Encontrado' : 'Não Encontrado'
+        ];
     }
 
 

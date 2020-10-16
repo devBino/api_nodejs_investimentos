@@ -25,5 +25,9 @@ class Cotacao{
         return view('cotacao.index')->with(['data'=>$data]);
     }
 
+    public function getCotacao($ativo){
+        return json_encode( COT::getCotacao($ativo) );
+    }
+
 
 }
