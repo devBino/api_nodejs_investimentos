@@ -23,8 +23,9 @@ class TipoAivo extends Model{
     }
     setSqlAgrupamento(){
         this._sqlAgrupamento = `
-            select ta.cdTipo, nmTipo as Tipo,count(cdAtivo) as Total 
+            select ta.cdTipo, nmTipo as Tipo,count(a.cdAtivo) as Qtde_Ativos, sum(ap.subTotal) as Total_Aportado
             from tipo_ativo ta join ativo a on a.cdTipo = ta.cdTipo
+            left join aporte ap on ap.cdAtivo=a.cdAtivo
             group by ta.cdTipo
         `
     }
