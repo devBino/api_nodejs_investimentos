@@ -2,7 +2,7 @@
 namespace App\Http\Models;
 
 use App\Http\Contracts\ApiRestCrud;
-
+use Illuminate\Support\Facades\Redis;
 /**
  * @author Fernando Bino
  * @see Classe deve extenter a ModelData para estrategicamente preparar os parametros para chamada da Api
@@ -10,7 +10,7 @@ use App\Http\Contracts\ApiRestCrud;
 */
 class AtivoData extends ModelData{
 
-    protected static $url       = "http://localhost:3000/ativos";
+    protected static $recurso   = "ativos";
     protected static $arrCampos = [
         'id'=>'id',
         'cpNomeAtivo'=>'nmAtivo',
@@ -22,7 +22,7 @@ class AtivoData extends ModelData{
     ];
 
     public static function setParams(){
-        parent::$url        = self::$url;
+        parent::$url        = Redis::get('URL_MAIN') . self::$recurso . "/";
         parent::$arrCampos  = self::$arrCampos;
     }    
 

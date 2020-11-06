@@ -24,9 +24,7 @@ class Permissao{
                 $request->session()->put('autenticado',$dados);
             }
             
-            //grava token no redis
-            Redis::del( $params['usuario']."_token" );
-            Redis::set( $params['usuario']."_token", serialize($dados));
+            self::criarChavesSessionRedis($params,$dados);
 
             return true;
         }catch(Exception $e){
@@ -41,6 +39,16 @@ class Permissao{
             session()->forget('autenticado');
         }
 
+    }
+
+    public static function criarChavesSessionRedis( $params = [], $dados = [] ){
+        //grava token no redis
+        Redis::del( $params['usuario']."_token" );
+        Redis::set( $params['usuario']."_token", serialize($dados));
+
+        //define url servidor
+        Redis::del('URL_MAIN');
+        Redis::set('URL_MAIN','http://localhost:3000/');
     }
 
 

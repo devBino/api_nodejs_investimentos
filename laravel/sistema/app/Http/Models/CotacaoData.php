@@ -2,6 +2,7 @@
 namespace App\Http\Models;
 
 use App\Http\Contracts\ApiRestCrud;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * @author Fernando Bino
@@ -10,10 +11,11 @@ use App\Http\Contracts\ApiRestCrud;
 */
 class CotacaoData extends Model{
 
-    protected static $url       = "http://localhost:3000/cotacao/";
+    protected static $recurso       = "cotacao";
     
     public static function consultarCotacao($ativo){
-        $urlParam      = self::$url.$ativo;
+
+        $urlParam      = Redis::get('URL_MAIN') . self::$recurso . "/" . $ativo;
         parent::prepareExecuteApi($urlParam);
         $dadosCotacao   = parent::execute();
 

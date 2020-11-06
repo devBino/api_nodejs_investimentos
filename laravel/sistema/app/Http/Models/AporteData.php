@@ -2,6 +2,7 @@
 namespace App\Http\Models;
 
 use App\Http\Contracts\ApiRestCrud;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * @author Fernando Bino
@@ -10,7 +11,7 @@ use App\Http\Contracts\ApiRestCrud;
 */
 class AporteData extends ModelData{
 
-    protected static $url       = "http://localhost:3000/aportes";
+    protected static $recurso   = "aportes";
     protected static $arrCampos = [
         'id'=>'id',
         'cpAtivo'=>'cdAtivo',
@@ -22,7 +23,7 @@ class AporteData extends ModelData{
     ];
 
     public static function setParams(){
-        parent::$url        = self::$url;
+        parent::$url        = Redis::get('URL_MAIN') . self::$recurso . "/";
         parent::$arrCampos  = self::$arrCampos;
     }    
 
