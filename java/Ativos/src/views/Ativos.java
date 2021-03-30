@@ -28,8 +28,14 @@ import java.util.ArrayList;
 
 import controllers.CtAtivo;
 import controllers.CtTipoAtivo;
+import models.Ativo;
 import models.TipoAtivo;
+import parametros.Parametros;
 import repositories.DialogoUsuario;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Ativos extends JFrame {
 
@@ -163,6 +169,11 @@ public class Ativos extends JFrame {
 		contentPane.add(btnSalvar);
 		
 		JButton btnListar = new JButton("Listar");
+		btnListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listar();
+			}
+		});
 		btnListar.setBounds(92, 27, 78, 25);
 		contentPane.add(btnListar);
 		
@@ -189,6 +200,18 @@ public class Ativos extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				getDadosLinha(table.getSelectedRow());
+			}
+		});
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				getDadosLinha(table.getSelectedRow());
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		model = new DefaultTableModel();
@@ -251,7 +274,19 @@ public class Ativos extends JFrame {
 		
 	}
 	public void listar() {
+		ArrayList<String[]> lista = ctAtivo.listar();
 		
+		for(int i=0; i<lista.size(); i++) {
+			model.addRow(new Object[] {
+					lista.get(i)[0],
+					lista.get(i)[1],
+					lista.get(i)[2],
+					lista.get(i)[6],
+					lista.get(i)[4],
+					lista.get(i)[5],
+					lista.get(i)[3]
+			});
+		}
 	}
 	public void limpar(boolean confirmar) {
 		if(confirmar) {
@@ -283,7 +318,15 @@ public class Ativos extends JFrame {
 		}
 	}
 	public void deletar() {
-		
+		if( idAtivo.isEmpty() ) {
+			dialogo.aviso("Por favor, selecione um Ativo Financeiro...");
+		}else {
+			if(dialogo.confirmarAcao("Deseja deletar o Ativo Financeiro "+txtNomeAtivo.getText()+" ??")) {
+				ctAtivo.deletar(idAtivo);
+				limpar(false);
+				listar();
+			}
+		}
 	}
 	public void povoarComboTipoAtivos() {
 		ArrayList<TipoAtivo> tipoAtivos = ctAtivo.listarCombo();
@@ -294,4 +337,34 @@ public class Ativos extends JFrame {
 			cbxTipoAtivo.addItem(tipoAtivos.get(i).toString());
 		}
 	}
+	
+	public void getDadosLinha(int linha) {
+				
+		int indexCombo = getIndexCombo(model.getValueAt(linha,3).toString());
+		
+		idAtivo = model.getValueAt(linha,0).toString();
+		
+		txtNomeAtivo.setText( model.getValueAt(linha,1).toString() );
+		txtValor.setText( model.getValueAt(linha,2).toString() );
+		cbxTipoAtivo.setSelectedIndex(indexCombo);
+		txtTxAdministracao.setText( model.getValueAt(linha,4).toString() );
+		txtTxCustodia.setText( model.getValueAt(linha,5).toString());
+		txtTxPerforamnce.setText( model.getValueAt(linha,6).toString() );
+		
+	}
+	
+	public int getIndexCombo(String strId) {
+		
+		int index = 0;
+		
+		for( int i=0; i<cbxTipoAtivo.getModel().getSize(); i++ ) {
+			if( cbxTipoAtivo.getModel().getElementAt(i).toString().startsWith(strId) ) {
+				index = i;
+				break;
+			}
+		}
+		
+		return index;
+	}
+	
 }

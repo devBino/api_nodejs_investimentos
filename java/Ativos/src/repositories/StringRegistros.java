@@ -1,5 +1,10 @@
 package repositories;
 
+import java.util.List;
+import java.util.ArrayList;
+
+import models.TipoAtivo;
+
 public class StringRegistros {
 
 	public String strJson;
@@ -28,6 +33,53 @@ public class StringRegistros {
 		}
 		
 		return arrReturn;
+	}
+
+	public ArrayList<String[]> getListaRegistros(){
+		
+		ArrayList<String[]> arrReturn = new ArrayList<String[]>();
+		
+		for(String str : this.getRegistros()) {
+			
+			String[] arrStr = str.split(",");
+			String[] arrLinha = new String[arrStr.length];
+			
+			for(int i=0; i<arrStr.length; i++) {
+				String[] arrChave = arrStr[i].split(":");
+				arrLinha[i] = arrChave[1].replaceAll("\"", "");
+			
+			}
+			
+			arrReturn.add(arrLinha);
+			
+		}
+		
+		return arrReturn;
+	}
+	
+	public ArrayList<TipoAtivo> getDadosCombo(){
+		
+		ArrayList<TipoAtivo> arrReturn = new ArrayList<TipoAtivo>();
+		
+		for(String str : this.getRegistros()) {
+			
+			String[] arrStr = str.split(",");
+			String[] arrLinha = new String[arrStr.length];
+			
+			for(int i=0; i<arrStr.length; i++) {
+				String[] arrChave = arrStr[i].split(":");
+				arrLinha[i] = arrChave[1];
+			}
+			
+			arrReturn.add(new TipoAtivo(
+					Integer.parseInt(arrLinha[0].replaceAll("\"", "")),
+					arrLinha[1].replaceAll("\"", ""),
+					arrLinha[2].replaceAll("\"", "")
+			));
+		}
+		
+		return arrReturn;
+		
 	}
 	
 }

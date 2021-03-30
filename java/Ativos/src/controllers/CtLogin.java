@@ -1,6 +1,6 @@
 package controllers;
 
-import repositories.Request2;
+import repositories.Request;
 import models.Auth;
 import parametros.Parametros;
 
@@ -13,28 +13,29 @@ public class CtLogin {
 	protected String senha;
 	protected String token;
 	public String mensagem;
-	public String url = Parametros.baseUrl + "autenticacao";
+	public String url;
 	
 	public CtLogin( String nome, String senha ) {
 		this.nome = nome;
 		this.senha = senha;
+		url = Parametros.baseUrl + "autenticacao";
 	}
 
 	public String getToken() {
-		return this.token;
+		return token;
 	}
 	
 	public boolean validaLogin() {
 		try {
-			Request2 req = new Request2();
-			String resposta = req.getRequest( this.url + "/" + this.nome + "/" + this.senha );
+			Request req = new Request();
+			String resposta = req.getRequest( url + "/" + nome + "/" + senha );
 			
-			this.mensagem = req.mensagem;
+			mensagem = req.mensagem;
 			
 			Gson gson = new Gson();
 			Auth auth  = gson.fromJson(resposta,Auth.class);
 			
-			this.token = auth.token;
+			token = auth.token;
 			
 			if( auth.auth ) {
 				return true;

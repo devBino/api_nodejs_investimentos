@@ -50,4 +50,12 @@ public class DialogoUsuario {
 		JOptionPane.showMessageDialog(null, msg, "Aviso",JOptionPane.WARNING_MESSAGE);
 	}
 	
+	public void mensagemCrud(String acaoSucesso, String acaoFalha, String resposta) {
+		if( resposta.contains("\"affectedRows\":1") ) {
+			JOptionPane.showMessageDialog(null, "Registro "+acaoSucesso+" com sucesso...","Informação",JOptionPane.INFORMATION_MESSAGE);
+		}else {
+			JOptionPane.showMessageDialog(null, "Não foi possível "+acaoFalha+" o registro...","Aviso",JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
 }

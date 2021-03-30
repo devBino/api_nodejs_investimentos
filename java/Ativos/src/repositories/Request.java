@@ -1,123 +1,190 @@
 package repositories;
 
-import java.net.URL;
 import java.io.BufferedReader;
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
 
+import models.Sessao;
 
 public class Request {
-
-	/**
-	 * @see https://www.youtube.com/watch?v=OaJ43rTJRqw&ab_channel=Nick%E2%80%99sDesk
-	 * atributos necessários para
-	 * classe atual que irá intermediar as requisições get e post
-	 * para esse projeto
-	*/
-	private double API_VERSION = 0;
-	private String API = "";
-	private String METHOD = "POST";
-	private String TYPE = "application/x-www-form-urlencoded";
-	private String USER_AGENT = "Mozilla/5.0";
-	private String data = "";
-	private URL connection;
-	private HttpURLConnection finalConnection;
+	
+	public String mensagem = "";
 	private HashMap<String,String> fields = new HashMap<String,String>();
-
-	//construtor
-	public Request(String[] endpoint, String url, double version) {
-		this.API_VERSION = version;
-		this.API = url;
-		fields.put("version",String.valueOf(version));
-		for( int i=0; i<endpoint.length; i++ ) {
-			String[] points = endpoint[i].split(";");
-			for( int j=0; j<points.length; j++ ) {
-				fields.put(points[j].split(":")[0],points[j].split(":")[1]);
-			}
-		}
-	}
 	
-	//geters
-	public String getApiVersion() {
-		return String.valueOf(this.API_VERSION);
-	}
-	public String getEndpoints() {
-		return this.fields.toString();
-	}
-	public String getEndpointsValue(String key) {
-		return this.fields.get(key);
-	}
-	public void setUserAgent(String userAgent) {
-		this.USER_AGENT = userAgent;
-	}
-	public void setMethod(String method) {
-		this.METHOD = method;
-	}
-	public void setRequestType(String type) {
-		this.TYPE = type;
-	}
-	
-	private InputStream readwithAccess(URL url, String data) {
+	public String getRequest(String strUrl) {
 		try {
-			byte[] out = data.toString().getBytes();
-			this.finalConnection = (HttpURLConnection) url.openConnection();
-			this.finalConnection.setRequestMethod(this.METHOD);
-			this.finalConnection.setDoOutput(true);
-			this.finalConnection.addRequestProperty("User-Agent", this.USER_AGENT);
-			this.finalConnection.addRequestProperty("Content-type", this.TYPE);
-			this.finalConnection.connect();
-			try {
-				OutputStream os = this.finalConnection.getOutputStream();
-				os.write(out);
-				return this.finalConnection.getInputStream();
-			}catch(Exception e) {
-				System.err.println(e.getMessage());
+			URL url = new URL(strUrl);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			
+			if( con.getResponseCode() != 200 ) {
+				this.mensagem = "Erro ao conectar com a API...";
 				return null;
 			}
-		}catch(Exception e){
-			System.err.println(e.getMessage());
-			return null;
-		}
-	}
-
-	public String buildRequest() {
-		
-		StringBuilder content = new StringBuilder();
-		
-		//se nenhuma chave estiver vazia e se existirem os paramtetros em fields
-		if( !this.getEndpoints().equalsIgnoreCase("") && !this.getEndpoints().isEmpty() ) {
-			String vars = "";
-			String vals = "";
-			try {
-				for(Map.Entry<String, String> entry : fields.entrySet()) {
-					vars = entry.getKey();
-					vals = entry.getValue();
-					data += ("&"+vars+"="+vals);
-				}
-				if(data.startsWith("&")) {
-					data.replaceFirst("&", "");
-				}
-				this.connection = new URL(this.API);
-				BufferedReader reader = new BufferedReader(new InputStreamReader(readwithAccess(connection, data)));
-				
-				String line;
-				while( (line = reader.readLine()) != null ) {
-					content.append(line+"\n");
-				}
-				reader.close();
-				return content.toString();
-			}catch(Exception e) {
-				System.out.println(e.getMessage());
-				return null;
-			}
-		}else {
+			
+			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
+			String strJson = this.requestToJson(resposta);
+			
+			con.disconnect();
+			
+			return strJson;
+		}catch(Exception e) {
+			this.mensagem = "Erro: "+e.getMessage();
 			return null;
 		}
 	}
 	
+	public String postRequest(String strUrl, String params) {
+		try {
+			URL url = new URL(strUrl);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			
+			con.setRequestMethod("POST");
+			con.setDoOutput(true);
+			con.addRequestProperty("User-Agent","Mozilla/5.0");
+			con.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			con.addRequestProperty("x-access-token", Sessao.token);
+			con.connect();
+			
+			OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		    out.write(params);
+		    out.flush();
+		    
+		    /*System.out.println(con.getResponseCode());
+		    System.out.println(con.getResponseMessage());*/
+		    
+			if( con.getResponseCode() != 200 ) {
+				this.mensagem = "Erro ao conectar com a API...";
+				return null;
+			}
+			
+			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
+			String strJson = this.requestToJson(resposta);
+			
+			out.close();
+		    con.disconnect();
+		    
+			return strJson;
+			
+		}catch(Exception e) {
+			this.mensagem = "Erro: "+e.getMessage();
+			return null;
+		}
+	}
+	
+	public String putRequest(String strUrl, String params) {
+		try {
+			URL url = new URL(strUrl);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			
+			con.setRequestMethod("PUT");
+			con.setDoOutput(true);
+			con.addRequestProperty("User-Agent","Mozilla/5.0");
+			con.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			con.addRequestProperty("x-access-token", Sessao.token);
+			con.connect();
+			
+			OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		    out.write(params);
+		    out.flush();
+		    
+		    /*System.out.println(con.getResponseCode());
+		    System.out.println(con.getResponseMessage());*/
+		    
+			if( con.getResponseCode() != 200 ) {
+				this.mensagem = "Erro ao conectar com a API...";
+				return null;
+			}
+			
+			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
+			String strJson = this.requestToJson(resposta);
+			
+			out.close();
+		    con.disconnect();
+		    
+			return strJson;
+		}catch(Exception e) {
+			this.mensagem = "Erro: "+e.getMessage();
+			return null;
+		}
+	}
+	
+	public String delRequest(String strUrl) {
+		try {
+			URL url = new URL(strUrl);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			
+			con.setRequestMethod("DELETE");
+			con.setDoOutput(true);
+			con.addRequestProperty("User-Agent","Mozilla/5.0");
+			con.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			con.addRequestProperty("x-access-token", Sessao.token);
+			con.connect();
+			
+		    /*System.out.println(con.getResponseCode());
+		    System.out.println(con.getResponseMessage());*/
+		    
+			if( con.getResponseCode() != 200 ) {
+				this.mensagem = "Erro ao conectar com a API...";
+				return null;
+			}
+			
+			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
+			String strJson = this.requestToJson(resposta);
+			
+		    con.disconnect();
+		    
+			return strJson;
+		}catch(Exception e) {
+			this.mensagem = "Erro: "+e.getMessage();
+			return null;
+		}
+	}
+	
+	public String listar(String strUrl) {
+		try {
+			URL url = new URL(strUrl);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			
+			con.setRequestMethod("GET");
+			con.setDoOutput(true);
+			con.addRequestProperty("User-Agent","Mozilla/5.0");
+			con.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			con.addRequestProperty("x-access-token", Sessao.token);
+			con.connect();
+			
+		    /*System.out.println(con.getResponseCode());
+		    System.out.println(con.getResponseMessage());*/
+		    
+			if( con.getResponseCode() != 200 ) {
+				this.mensagem = "Erro ao conectar com a API...";
+				return null;
+			}
+			
+			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
+			String strJson = this.requestToJson(resposta);
+			
+		    con.disconnect();
+		    
+			return strJson;
+			
+		}catch(Exception e) {
+			this.mensagem = "Erro: "+e.getMessage();
+			return null;
+		}
+	}
+	
+	public String requestToJson(BufferedReader br ) throws IOException {
+		String resposta, strJson = "";
+		
+		while( (resposta = br.readLine()) != null ) {
+			strJson += resposta;
+		}
+		
+		return strJson;
+	}
 	
 }

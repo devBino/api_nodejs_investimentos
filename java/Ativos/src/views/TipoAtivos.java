@@ -136,7 +136,6 @@ public class TipoAtivos extends JFrame {
 				int linhaClicada = table.getSelectedRow();
 				idTipo = model.getValueAt(linhaClicada, 0).toString();
 				txtNomeTipo.setText(model.getValueAt(linhaClicada, 1).toString());
-				txtNomeTipo.requestFocus();
 			}
 		});
 		

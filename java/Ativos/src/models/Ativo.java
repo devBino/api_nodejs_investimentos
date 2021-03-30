@@ -2,7 +2,7 @@ package models;
 
 public class Ativo {
 
-	public String[] campos = new String[] {
+	protected String[] campos = new String[] {
 		"nmAtivo","vlAtivo","taxaAdmin","taxaCustodia","taxaPerformace","cdTipo"	
 	};
 	

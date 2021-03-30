@@ -1,87 +1,71 @@
 package controllers;
 
-import repositories.Request2;
+import repositories.Request;
 import repositories.DialogoUsuario;
 import repositories.StringRegistros;
+import repositories.ParametrosUrl;
 import models.Ativo;
 import models.TipoAtivo;
 import parametros.Parametros;
 
-import java.util.List;
 import java.util.ArrayList;
 
 
 public class CtAtivo {
 
 	public String nomeAtivo;
-	public String url = Parametros.baseUrl + "ativos";
-	public DialogoUsuario dialogo = new DialogoUsuario();
-	public Ativo model = new Ativo();
+	public String url;
+	public DialogoUsuario dialogo;
+	public ParametrosUrl parametrosUrl;
+	public Ativo model;
 	
-	public CtAtivo() {}
+	public CtAtivo() {
+		url = Parametros.baseUrl + "ativos";
+		dialogo = new DialogoUsuario();
+		parametrosUrl = new ParametrosUrl();
+		model = new Ativo();
+	}
 	
 	public void salvar(String[] params) {
-		//prepara os parametros
 		
-		String[] campos = model.getCampos();
-		String strParams = "";
+		String strParams = parametrosUrl.prepareParamsUrl(params, model.getCampos());
 		
-		for(int i=0; i<params.length; i++) {
-			strParams += "&"+campos[i]+"="+params[i].replaceAll(" ", "%20");
-		}
-		
-		if( strParams.startsWith("&") ) {
-			strParams.replaceFirst("&", "");
-		}
-		
-		//inicia Request2 e submete requisição
-		Request2 req = new Request2();
+		Request req = new Request();
 		String resposta = req.postRequest(this.url, strParams);
 		
-		if( resposta.contains("\"affectedRows\":1") ) {
-			dialogo.sucesso("Ativo de Investimentos salvo com sucesso...");
-		}else {
-			dialogo.aviso("Não foi possível salvar o Ativo de Investimentos...");
-		}
-		
+		dialogo.mensagemCrud("salvo","salvar", resposta);
 	}
+	
 	public void alterar(String[] params, String idAtivo) {
 		
 	}
-	public void listar() {
+	
+	public ArrayList<String[]> listar() {
 		
-	}
-	public ArrayList<TipoAtivo> listarCombo() {
-		
-		//busca os dados
-		String urlTipoAtivos = Parametros.baseUrl + "tipoAtivos";
-		Request2 req = new Request2();
-		String strLista = req.listar(urlTipoAtivos);
-		
-		//inicia retorno
-		ArrayList<TipoAtivo> arrReturn = new ArrayList<TipoAtivo>();
+		Request req = new Request();
+		String strLista = req.listar(this.url);
 		
 		StringRegistros strRegistros = new StringRegistros(strLista);
 		
-		for(String str : strRegistros.getRegistros()) {
-			String[] arrStr = str.split(",");
-			String[] arrLinha = new String[arrStr.length];
-			for(int i=0; i<arrStr.length; i++) {
-				String[] arrChave = arrStr[i].split(":");
-				arrLinha[i] = arrChave[1];
-			}
-			
-			arrReturn.add(new TipoAtivo(
-					Integer.parseInt(arrLinha[0].replaceAll("\"", "")),
-					arrLinha[1].replaceAll("\"", ""),
-					arrLinha[2].replaceAll("\"", "")
-			));
-		}
-		
-		return arrReturn;
+		return strRegistros.getListaRegistros();
 	}
-	public void deletar() {
+	
+	public ArrayList<TipoAtivo> listarCombo() {
 		
+		String urlTipoAtivos = Parametros.baseUrl + "tipoAtivos";
+		Request req = new Request();
+		
+		String strLista = req.listar(urlTipoAtivos);
+		StringRegistros strRegistros = new StringRegistros(strLista);
+		
+		return strRegistros.getDadosCombo();
+	}
+	
+	public void deletar(String idTipo) {
+		Request req = new Request();
+		String resposta = req.delRequest(this.url+"/"+idTipo);
+		
+		dialogo.mensagemCrud("deletado", "deletar", resposta);
 	}
 	
 	
