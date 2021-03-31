@@ -37,7 +37,13 @@ public class CtAtivo {
 	}
 	
 	public void alterar(String[] params, String idAtivo) {
+		parametrosUrl.setarId(idAtivo);
+		String strParams = parametrosUrl.prepareParamsUrl(params, model.getCampos());
 		
+		Request req = new Request();
+		String resposta = req.putRequest(url, strParams);
+		
+		dialogo.mensagemCrud("alterado", "alterar", resposta);
 	}
 	
 	public ArrayList<String[]> listar() {

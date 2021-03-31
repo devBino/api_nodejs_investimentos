@@ -52,12 +52,15 @@ public class Ativos extends JFrame {
 	private JTextField txtTxPerforamnce;
 	private JTable table;
 	private JComboBox cbxTipoAtivo;
+	private JButton btnRegistroAnterior;
+	private JButton btnProximoRegistro;
 	
 	private DefaultTableModel model;
 	private DialogoUsuario dialogo = new DialogoUsuario();
 	private CtAtivo ctAtivo = new CtAtivo();
 	
 	private String idAtivo = "";
+	private int indexRegistro = 0;
 
 	/**
 	 * Launch the application.
@@ -220,11 +223,21 @@ public class Ativos extends JFrame {
 		model.setColumnIdentifiers(colunas);
 		table.setModel(model);
 		
-		JButton btnRegistroAnterior = new JButton("<<");
+		btnRegistroAnterior = new JButton("<<");
+		btnRegistroAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				registroAnterior();
+			}
+		});
 		btnRegistroAnterior.setBounds(351, 27, 54, 25);
 		contentPane.add(btnRegistroAnterior);
 		
-		JButton btnProximoRegistro = new JButton(">>");
+		btnProximoRegistro = new JButton(">>");
+		btnProximoRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				proximoRegistro();
+			}
+		});
 		btnProximoRegistro.setBounds(406, 27, 54, 25);
 		contentPane.add(btnProximoRegistro);
 		
@@ -272,19 +285,21 @@ public class Ativos extends JFrame {
 			txtNomeAtivo.requestFocus();
 		}		
 		
-	}
+	}	
+
 	public void listar() {
+		model.setNumRows(0);
 		ArrayList<String[]> lista = ctAtivo.listar();
-		
+
 		for(int i=0; i<lista.size(); i++) {
 			model.addRow(new Object[] {
 					lista.get(i)[0],
 					lista.get(i)[1],
 					lista.get(i)[2],
 					lista.get(i)[6],
+					lista.get(i)[3],
 					lista.get(i)[4],
-					lista.get(i)[5],
-					lista.get(i)[3]
+					lista.get(i)[5]
 			});
 		}
 	}
@@ -297,9 +312,12 @@ public class Ativos extends JFrame {
 				txtTxCustodia.setText("");
 				txtTxPerforamnce.setText("");
 				cbxTipoAtivo.setSelectedItem("");
+				btnRegistroAnterior.setEnabled(true);
+				btnProximoRegistro.setEnabled(true);
 				
 				model.setNumRows(0);
 				idAtivo = "";
+				indexRegistro = 0;
 				
 				txtNomeAtivo.requestFocus();
 			}
@@ -310,9 +328,12 @@ public class Ativos extends JFrame {
 			txtTxCustodia.setText("");
 			txtTxPerforamnce.setText("");
 			cbxTipoAtivo.setSelectedItem("");
+			btnRegistroAnterior.setEnabled(true);
+			btnProximoRegistro.setEnabled(false);
 			
 			model.setNumRows(0);
 			idAtivo = "";
+			indexRegistro = 0;
 			
 			txtNomeAtivo.requestFocus();
 		}
@@ -366,5 +387,63 @@ public class Ativos extends JFrame {
 		
 		return index;
 	}
+	
+	public void registroAnterior() {
+		try {
+			if( model.getRowCount() >= 1 && indexRegistro > 0 ) {
+				indexRegistro = indexRegistro - 1;
+			}else {
+				indexRegistro = 0;
+				btnRegistroAnterior.setEnabled(false);
+				btnProximoRegistro.setEnabled(true);
+			}
+			
+		}catch(Exception e) {
+			indexRegistro = 0;
+			
+			btnRegistroAnterior.setEnabled(false);
+			btnProximoRegistro.setEnabled(true);
+		}
+		
+		int indexCombo = getIndexCombo(model.getValueAt(indexRegistro,3).toString());
+		
+		idAtivo = model.getValueAt(indexRegistro,0).toString();
+		txtNomeAtivo.setText( model.getValueAt(indexRegistro, 1).toString() );
+		txtValor.setText( model.getValueAt(indexRegistro,2).toString() );
+		cbxTipoAtivo.setSelectedIndex(indexCombo);
+		txtTxAdministracao.setText( model.getValueAt(indexRegistro,4).toString() );
+		txtTxCustodia.setText( model.getValueAt(indexRegistro,5).toString());
+		txtTxPerforamnce.setText( model.getValueAt(indexRegistro,6).toString() );
+		
+	}
+	
+	public void proximoRegistro() {
+		try {
+			if( model.getRowCount() > 0 && indexRegistro < model.getRowCount() - 1 ) {
+				indexRegistro = indexRegistro + 1;
+			}else {
+				indexRegistro = model.getRowCount() - 1;
+				
+				btnRegistroAnterior.setEnabled(true);
+				btnProximoRegistro.setEnabled(false);
+			}
+		}catch(Exception e) {
+			indexRegistro = model.getRowCount() - 1;
+			
+			btnRegistroAnterior.setEnabled(true);
+			btnProximoRegistro.setEnabled(false);
+		}
+		
+		int indexCombo = getIndexCombo(model.getValueAt(indexRegistro,3).toString());
+		
+		idAtivo = model.getValueAt(indexRegistro,0).toString();
+		txtNomeAtivo.setText( model.getValueAt(indexRegistro, 1).toString() );
+		txtValor.setText( model.getValueAt(indexRegistro,2).toString() );
+		cbxTipoAtivo.setSelectedIndex(indexCombo);
+		txtTxAdministracao.setText( model.getValueAt(indexRegistro,4).toString() );
+		txtTxCustodia.setText( model.getValueAt(indexRegistro,5).toString());
+		txtTxPerforamnce.setText( model.getValueAt(indexRegistro,6).toString() );
+	}
+	
 	
 }

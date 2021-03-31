@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Aportes extends JFrame {
 
@@ -31,6 +33,14 @@ public class Aportes extends JFrame {
 	 * Create the frame.
 	 */
 	public Aportes() {
+		setResizable(false);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Sistema s = new Sistema();
+				s.setVisible(true);
+			}
+		});
 		setTitle("Cadastro de Ativos - Aportes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
