@@ -11,7 +11,7 @@ class Aporte extends Model{
     }
 
     setSqlQuery(){
-        this._sqlQuery = 'select * from aporte'
+        this._sqlQuery = 'select a.*,at.nmAtivo from aporte a inner join ativo at on(a.cdAtivo=at.cdAtivo)'
     }
 
     setSqlInsert(){

@@ -18,8 +18,6 @@ import javax.swing.JLabel;
 
 import java.awt.Frame;
 
-import views.internal.frames.*;
-
 public class Sistema extends JFrame {
 	
 	public DialogoUsuario dialogo = new DialogoUsuario();
