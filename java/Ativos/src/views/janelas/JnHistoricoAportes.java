@@ -52,11 +52,11 @@ public class JnHistoricoAportes extends JInternalFrame {
 		setTitle("Histórico de Aportes");
 		setIconifiable(true);
 		setClosable(true);
-		setBounds(100, 100, 933, 343);
+		setBounds(10,270,830,275);
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 47, 899, 252);
+		scrollPane.setBounds(12, 47, 796, 184);
 		getContentPane().add(scrollPane);
 		
 		table = new JTable();

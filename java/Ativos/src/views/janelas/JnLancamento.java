@@ -8,6 +8,9 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.UIManager;
 
 public class JnLancamento extends JInternalFrame {
 	private JTextField txtValor;
@@ -35,6 +38,7 @@ public class JnLancamento extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public JnLancamento() {
+		setBorder(UIManager.getBorder("InternalFrame.border"));
 		setTitle("Lançar Aportes");
 		setClosable(true);
 		setIconifiable(true);

@@ -22,6 +22,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -32,10 +36,13 @@ import models.Ativo;
 import models.TipoAtivo;
 import parametros.Parametros;
 import repositories.DialogoUsuario;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import repositories.Numero;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Ativos extends JFrame {
 
@@ -105,7 +112,7 @@ public class Ativos extends JFrame {
 		
 		JLabel lblNomeAtivo = new JLabel("Nome Ativo");
 		lblNomeAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomeAtivo.setBounds(12, 73, 87, 15);
+		lblNomeAtivo.setBounds(12, 74, 95, 15);
 		contentPane.add(lblNomeAtivo);
 		
 		txtNomeAtivo = new JTextField();
@@ -119,13 +126,20 @@ public class Ativos extends JFrame {
 		contentPane.add(lblValorCota);
 		
 		txtValor = new JTextField();
+		txtValor.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Numero num = new Numero(txtValor.getText());
+				txtValor.setText(num.getNumero());
+			}
+		});
 		txtValor.setBounds(445, 71, 160, 19);
 		contentPane.add(txtValor);
 		txtValor.setColumns(10);
 		
 		lblNewLabel = new JLabel("Tipo Ativo");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(12, 100, 87, 15);
+		lblNewLabel.setBounds(12, 104, 95, 15);
 		contentPane.add(lblNewLabel);
 		
 		cbxTipoAtivo = new JComboBox();
@@ -134,7 +148,7 @@ public class Ativos extends JFrame {
 		
 		lblTxAdministracao = new JLabel("Tx. Administração");
 		lblTxAdministracao.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTxAdministracao.setBounds(307, 100, 135, 15);
+		lblTxAdministracao.setBounds(307, 102, 135, 15);
 		contentPane.add(lblTxAdministracao);
 		
 		lblTxCustdia = new JLabel("Tx. Custódia");
@@ -148,16 +162,38 @@ public class Ativos extends JFrame {
 		contentPane.add(lblTxPerformance);
 		
 		txtTxAdministracao = new JTextField();
-		txtTxAdministracao.setBounds(445, 98, 160, 19);
+		txtTxAdministracao.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Numero num = new Numero(txtTxAdministracao.getText());
+				txtTxAdministracao.setText(num.getNumero());
+			}
+		});
+		txtTxAdministracao.setBounds(445, 101, 160, 19);
 		contentPane.add(txtTxAdministracao);
 		txtTxAdministracao.setColumns(10);
 		
 		txtTxCustodia = new JTextField();
+		txtTxCustodia.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Numero num = new Numero(txtTxCustodia.getText());
+				txtTxCustodia.setText( num.getNumero() );
+			}
+		});
+		
 		txtTxCustodia.setBounds(112, 134, 192, 19);
 		contentPane.add(txtTxCustodia);
 		txtTxCustodia.setColumns(10);
 		
 		txtTxPerforamnce = new JTextField();
+		txtTxPerforamnce.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Numero num = new Numero(txtTxPerforamnce.getText());
+				txtTxPerforamnce.setText( num.getNumero() );
+			}
+		});
 		txtTxPerforamnce.setBounds(445, 134, 160, 19);
 		contentPane.add(txtTxPerforamnce);
 		txtTxPerforamnce.setColumns(10);
@@ -192,7 +228,11 @@ public class Ativos extends JFrame {
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpar(true);
+				if( telaContemDados() ) {
+					limpar(true);
+				}else {
+					dialogo.aviso("Não existem dados carregados...");
+				}
 			}
 		});
 		btnLimpar.setBounds(260, 27, 87, 25);
@@ -226,7 +266,11 @@ public class Ativos extends JFrame {
 		btnRegistroAnterior = new JButton("<<");
 		btnRegistroAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				registroAnterior();
+				if( model.getRowCount() > 0 ) {
+					registroAnterior();	
+				}else {
+					dialogo.aviso("Favor Listar os registros e tentar novamente...");
+				}
 			}
 		});
 		btnRegistroAnterior.setBounds(351, 27, 54, 25);
@@ -235,7 +279,11 @@ public class Ativos extends JFrame {
 		btnProximoRegistro = new JButton(">>");
 		btnProximoRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				proximoRegistro();
+				if( model.getRowCount() > 0 ) {
+					proximoRegistro();	
+				}else {
+					dialogo.aviso("Favor Listar os registros e tentar novamente...");
+				}
 			}
 		});
 		btnProximoRegistro.setBounds(406, 27, 54, 25);
@@ -303,6 +351,32 @@ public class Ativos extends JFrame {
 			});
 		}
 	}
+	
+	public boolean telaContemDados() {
+		
+		Boolean[] dadosCampos = new Boolean[7];
+		
+		dadosCampos[0] = !txtNomeAtivo.getText().isEmpty();
+		dadosCampos[1] = !txtTxAdministracao.getText().isEmpty();
+		dadosCampos[2] = !txtTxCustodia.getText().isEmpty();
+		dadosCampos[3] = !txtTxPerforamnce.getText().isEmpty();
+		dadosCampos[4] = !txtValor.getText().isEmpty();
+		dadosCampos[5] = ( cbxTipoAtivo.getSelectedIndex() > 0 );
+		dadosCampos[6] = ( model.getRowCount() > 0 );
+		
+		boolean temConteudo = false;
+		
+		for(Boolean b : dadosCampos) {
+			
+			if( b ) {
+				temConteudo = true;
+				break;
+			}
+		}
+		
+		return temConteudo;
+	}
+	
 	public void limpar(boolean confirmar) {
 		if(confirmar) {
 			if( dialogo.confirmarAcao("Deseja limpar os dados da Tela  ??") ){

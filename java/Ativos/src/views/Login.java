@@ -17,19 +17,24 @@ import java.awt.Font;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import views.Sistema;
 import controllers.CtLogin;
 import models.Sessao;
 import repositories.DialogoUsuario;
+import repositories.Sha1;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtLogin;
 	private JPasswordField txtSenha;
-	public DialogoUsuario dialogo = new DialogoUsuario();
+	public DialogoUsuario dialogo;
+	public Sha1 sha1;
 
 	/**
 	 * Launch the application.
@@ -51,6 +56,9 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		
+		dialogo = new DialogoUsuario();
+		
 		setUndecorated(true);
 		
 		addWindowListener(new WindowAdapter() {
@@ -93,7 +101,11 @@ public class Login extends JFrame {
 		btnAcessar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				processaLogin();
+				try {
+					processaLogin();
+				}catch(Exception err) {
+					err.printStackTrace();
+				}
 			}
 			
 		});
@@ -118,14 +130,13 @@ public class Login extends JFrame {
 		lblTeste.setBounds(256, 39, 250, 211);
 		contentPane.add(lblTeste);
 
-		txtSenha.setText("d033e22ae348aeb5660fc2140aec35850c4da997");
-		
 		setLocationRelativeTo(null);
 	}
 	
-	public boolean processaLogin() {
+	public boolean processaLogin() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		
-		CtLogin ctLog = new CtLogin( txtLogin.getText(), new String(txtSenha.getPassword()) );
+		sha1 = new Sha1(new String(txtSenha.getPassword()));
+		CtLogin ctLog = new CtLogin( txtLogin.getText(), sha1.getHash() );
 		
 		// verifica se foram informados os parametros
 		if( txtLogin.getText().isEmpty() || new String(txtSenha.getPassword()).isEmpty() ) {

@@ -162,7 +162,11 @@ public class TipoAtivos extends JFrame {
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpar(true);
+				if( telaContemDados() ) {
+					limpar(true);
+				}else {
+					dialogo.aviso("Não existem dados carregados...");
+				}
 			}
 		});
 		btnLimpar.setBounds(287, 52, 84, 25);
@@ -177,7 +181,11 @@ public class TipoAtivos extends JFrame {
 		btnRegistroAnterior = new JButton("<<");
 		btnRegistroAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				registroAnterior();
+				if( model.getRowCount() > 0 ) {
+					registroAnterior();
+				}else {
+					dialogo.aviso("Favor Listar os registros e tentar novamente...");
+				}
 			}
 		});
 		btnRegistroAnterior.setBounds(373, 52, 54, 25);
@@ -186,7 +194,11 @@ public class TipoAtivos extends JFrame {
 		btnProximoRegistro = new JButton(">>");
 		btnProximoRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				proximoRegistro();
+				if( model.getRowCount() > 0 ) {
+					proximoRegistro();	
+				}else {
+					dialogo.aviso("Favor Listar os registros e tentar novamente...");
+				}
 			}
 		});
 		btnProximoRegistro.setBounds(428, 52, 54, 25);
@@ -194,6 +206,15 @@ public class TipoAtivos extends JFrame {
 		
 		setLocationRelativeTo(null);
 		txtNomeTipo.requestFocus();
+	}
+	
+	public boolean telaContemDados() {
+		
+		if( txtNomeTipo.getText().isEmpty() && model.getRowCount() == 0 ) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public void limpar(boolean confirmar) {
