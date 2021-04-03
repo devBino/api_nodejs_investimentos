@@ -6,6 +6,10 @@ import java.text.DecimalFormat;
 public class Numero {
 
 	public String getNumero(String strNumero) {
+	
+		if( strNumero.isEmpty() ) {
+			return "0.00";
+		}
 		
 		String numero = "0.00";
 	

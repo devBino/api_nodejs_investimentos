@@ -15,15 +15,20 @@ import models.Aporte;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import repositories.DialogoUsuario;
 
 public class JnHistoricoAportes extends JInternalFrame {
 
-	private JTable table;
+	public static JTable table;
 	
 	private CtAporte ctAporte;
 	private Aporte mdAporte;
 	private DefaultTableModel model;
 	private JTextField txtNomeAtivo;
+	private DialogoUsuario dialogo;
 
 	/**
 	 * Launch the application.
@@ -48,6 +53,7 @@ public class JnHistoricoAportes extends JInternalFrame {
 		
 		ctAporte = new CtAporte();
 		mdAporte = new Aporte();
+		dialogo = new DialogoUsuario();
 		
 		setTitle("Histórico de Aportes");
 		setIconifiable(true);
@@ -66,6 +72,11 @@ public class JnHistoricoAportes extends JInternalFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listar();
+			}
+		});
 		btnAtualizar.setBounds(351, 10, 98, 25);
 		getContentPane().add(btnAtualizar);
 		
@@ -79,10 +90,21 @@ public class JnHistoricoAportes extends JInternalFrame {
 		txtNomeAtivo.setColumns(10);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filtrarNomeAtivo();
+			}
+		});
 		btnFiltrar.setBounds(267, 10, 83, 25);
 		getContentPane().add(btnFiltrar);
 		
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i = table.getSelectedRow();
+				model.removeRow(i);
+			}
+		});
 		btnDeletar.setBounds(450, 10, 117, 25);
 		getContentPane().add(btnDeletar);
 
@@ -104,10 +126,40 @@ public class JnHistoricoAportes extends JInternalFrame {
 					lista.get(i)[2],
 					lista.get(i)[3],
 					lista.get(i)[4],
-					lista.get(i)[5],
+					lista.get(i)[5].substring(0,10),
 					lista.get(i)[6],
 			});
 		}
 		
+	}
+	
+	public void filtrarNomeAtivo() {
+		if( !txtNomeAtivo.getText().isEmpty() ) {
+			
+			listar();
+			
+			DefaultTableModel modelFiltro = new DefaultTableModel();
+			modelFiltro.setColumnIdentifiers( mdAporte.getArrayNomesCampos() );
+			
+			for( int i=0; i<model.getRowCount(); i++ ) {
+				if(model.getValueAt(i,1).toString().toLowerCase().contains( txtNomeAtivo.getText().toLowerCase() )) {
+					
+					String[] objRow = new String[model.getColumnCount()];
+					
+					for( int j=0; j<model.getColumnCount(); j++ ) {						
+						objRow[j] = model.getValueAt(i,j).toString();
+					}
+					
+					modelFiltro.addRow(objRow);
+				}
+				
+			}
+			
+			model = modelFiltro;
+			table.setModel(model);
+		}else {
+			dialogo.aviso("Por favor, informe o nome do ativo...");
+			txtNomeAtivo.requestFocus();
+		}
 	}
 }

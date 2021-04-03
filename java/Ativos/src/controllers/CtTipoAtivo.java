@@ -14,7 +14,7 @@ public class CtTipoAtivo {
 	public DialogoUsuario dialogo;
 	
 	public CtTipoAtivo() {
-		url = Parametros.baseUrl + "tipoAtivos";
+		url = Parametros.getBaseUrl() + "tipoAtivos";
 		dialogo = new DialogoUsuario();
 	}
 	

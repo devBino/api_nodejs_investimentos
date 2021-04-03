@@ -43,14 +43,16 @@ public class Aportes extends JFrame {
 
 	private JPanel contentPane;
 	private JDesktopPane desktopPane;
-	private JTextField txtAtivos;
+	
+	public static JTextField txtAtivos;
+	public static JTextField txtTipoAtivo;
+	
 	private JTextField txtValorMaiorIgual;
 	private JTextField txtValorMenorIgual;
 	private JTextField txtQtdeMaiorIgual;
 	private JTextField txtQtdeMenorIgual;
 	private JTextField txtSubTotalMaiorIgual;
 	private JTextField txtSubTotalMenorIgual;
-	private JTextField txtTipoAtivo;
 	private JTextField txtTxRetorno;
 	
 	public JnLancamento jnlancamento;
@@ -60,6 +62,8 @@ public class Aportes extends JFrame {
 	
 	private DialogoUsuario dialogo;
 	private Numero numero;
+	
+	public static String listaAuxiliarTiposAtivos; 
 	
 	/**
 	 * Launch the application.
@@ -86,6 +90,7 @@ public class Aportes extends JFrame {
 		dialogo = new DialogoUsuario();
 		janelasAdicionadasInicio = false;
 		numero = new Numero();
+		listaAuxiliarTiposAtivos = "";
 		
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
@@ -171,18 +176,44 @@ public class Aportes extends JFrame {
 		frameFiltro.getContentPane().add(txtAtivos);
 		txtAtivos.setColumns(10);
 		
-		JLabel label = new JLabel("...");
-		label.addMouseListener(new MouseAdapter() {
+		JLabel lblSelAtivo = new JLabel("...");
+		lblSelAtivo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PesquisaAtivo p = new PesquisaAtivo();
+				
+				p.rdbtnPesquisarAtivos.setSelected(true);
+				p.rdbtnPesquisarAtivos.setEnabled(false);
+				p.rdbtnPesquisarTipos.setSelected(false);
+				p.rdbtnPesquisarTipos.setEnabled(false);
+				
 				p.setVisible(true);
 			}
 		});
-		label.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		label.setBackground(SystemColor.textInactiveText);
-		label.setBounds(130, 31, 28, 19);
-		frameFiltro.getContentPane().add(label);
+		lblSelAtivo.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblSelAtivo.setBackground(SystemColor.textInactiveText);
+		lblSelAtivo.setBounds(130, 31, 28, 19);
+		frameFiltro.getContentPane().add(lblSelAtivo);
+		
+		JLabel lblSelTipoAtivo = new JLabel("...");
+		lblSelTipoAtivo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PesquisaAtivo p = new PesquisaAtivo();
+				
+				p.rdbtnPesquisarTipos.setSelected(true);
+				p.rdbtnPesquisarTipos.setEnabled(false);
+				p.rdbtnPesquisarAtivos.setSelected(false);
+				p.rdbtnPesquisarAtivos.setEnabled(false);
+				
+				p.setVisible(true);
+			}
+		});
+		lblSelTipoAtivo.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblSelTipoAtivo.setBackground(Color.GRAY);
+		lblSelTipoAtivo.setBounds(130, 63, 28, 19);
+		frameFiltro.getContentPane().add(lblSelTipoAtivo);
+		
 		
 		JLabel lblValor = new JLabel("Valor >=");
 		lblValor.setBounds(12, 88, 144, 15);
@@ -309,19 +340,6 @@ public class Aportes extends JFrame {
 		txtTipoAtivo.setBounds(10, 67, 112, 19);
 		frameFiltro.getContentPane().add(txtTipoAtivo);
 		txtTipoAtivo.setColumns(10);
-		
-		JLabel lblSelTipoAtivo = new JLabel("...");
-		lblSelTipoAtivo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				PesquisaAtivo p = new PesquisaAtivo();
-				p.setVisible(true);
-			}
-		});
-		lblSelTipoAtivo.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblSelTipoAtivo.setBackground(Color.GRAY);
-		lblSelTipoAtivo.setBounds(130, 63, 28, 19);
-		frameFiltro.getContentPane().add(lblSelTipoAtivo);
 		
 		txtTxRetorno = new JTextField();
 		txtTxRetorno.addFocusListener(new FocusAdapter() {

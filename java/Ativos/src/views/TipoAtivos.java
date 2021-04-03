@@ -266,7 +266,7 @@ public class TipoAtivos extends JFrame {
 		
 		for(int i=0; i<lista.size(); i++) {
 			String[] arrLinha = lista.get(i);
-			model.addRow( new Object[] {arrLinha[0],arrLinha[1],  Parametros.situacoes[ Integer.parseInt(arrLinha[2]) ] } );
+			model.addRow( new Object[] {arrLinha[0],arrLinha[1],  Parametros.getSituacoes()[ Integer.parseInt(arrLinha[2]) ] } );
 		}
 		
 	}

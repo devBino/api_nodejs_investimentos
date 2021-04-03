@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import controllers.CtTipoAtivo;
 import controllers.CtAtivo;
 import repositories.DialogoUsuario;
+import javax.swing.ListSelectionModel;
 
 public class PesquisaAtivo extends JFrame {
 
@@ -33,8 +34,10 @@ public class PesquisaAtivo extends JFrame {
 	private DefaultTableModel modelTipoAtivos;
 	private DialogoUsuario dialogo;
 	
-	private JRadioButton rdbtnPesquisarAtivos;
-	private JRadioButton rdbtnPesquisarTipos;
+	public static JRadioButton rdbtnPesquisarAtivos;
+	public static JRadioButton rdbtnPesquisarTipos;
+	
+	public static String opcaoJanela;
 	
 	/**
 	 * Launch the application.
@@ -60,6 +63,7 @@ public class PesquisaAtivo extends JFrame {
 		ctAtivo = new CtAtivo();
 		ctTipoAtivo = new CtTipoAtivo();
 		dialogo = new DialogoUsuario();
+		opcaoJanela = "views.Aportes";
 		
 		setTitle("Pequisa de Ativos");
 		setResizable(false);
@@ -111,9 +115,22 @@ public class PesquisaAtivo extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPane.setViewportView(table);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if( table.getSelectedRows().length > 0 ) {
+					if( dialogo.confirmarAcao("Deseja confirmar a seleção dos dados??") ) {
+						confirmarSelecao();
+						dispose();
+					}
+				}else {
+					dialogo.aviso("Por Favor, selecione um ou mais registros");
+				}
+			}
+		});
 		btnConfirmar.setBounds(431, 70, 105, 19);
 		contentPane.add(btnConfirmar);
 		
@@ -138,6 +155,9 @@ public class PesquisaAtivo extends JFrame {
 	
 	public void listar() {
 		if( rdbtnPesquisarTipos.isSelected() ) {
+			
+			setarModelTabela(1);
+			
 			ArrayList<String[]> lista = ctTipoAtivo.listar();
 			
 			for(int i=0; i<lista.size(); i++) {
@@ -146,7 +166,10 @@ public class PesquisaAtivo extends JFrame {
 						lista.get(i)[1]
 				});
 			}
-		}else {
+		}else if( rdbtnPesquisarAtivos.isSelected() ) {
+			
+			setarModelTabela(2);
+			
 			ArrayList<String[]> lista = ctAtivo.listar();
 			
 			for(int i=0; i<lista.size(); i++) {
@@ -154,6 +177,44 @@ public class PesquisaAtivo extends JFrame {
 						lista.get(i)[0],
 						lista.get(i)[1]
 				});
+			}
+		}
+	}
+	
+	public void confirmarSelecao() {
+
+		int[] listaIndices = table.getSelectedRows();
+		ArrayList<String[]> lista = new ArrayList<String[]>();
+		
+		for(Integer indice : listaIndices) {
+			String[] arrLista = new String[2];
+			arrLista[0] = table.getValueAt(indice,0).toString();
+			arrLista[1] = table.getValueAt(indice,1).toString();
+			lista.add(arrLista);
+		}
+		
+		if( rdbtnPesquisarTipos.isSelected() ) {
+			models.PesquisaAtivo.setListaTipoAtivo(lista);
+			setarCampoJanelaSolicitante(1);
+		}else if( rdbtnPesquisarAtivos.isSelected()) {
+			models.PesquisaAtivo.setListaAtivo(lista);
+			setarCampoJanelaSolicitante(2);
+		}
+		
+	}
+	
+	/**
+	 * @description Metodo abaixo, por hora não respeita o Strategy Design Patterns
+	 * O projeto é pequeno, mas a medida que novas telas forem solicitar essa atual
+	 * é importante pensar em algo que evite ficar adicionando IFs a cada nova tela que chame 
+	 * essa atual
+	*/
+	public void setarCampoJanelaSolicitante(int opcao) {
+		if( opcaoJanela.equals("views.Aportes") ) {
+			if( opcao == 1 ) {
+				views.Aportes.txtTipoAtivo.setText(models.PesquisaAtivo.getListaTipoAtivo());
+			}else if( opcao == 2 ) {
+				views.Aportes.txtAtivos.setText(models.PesquisaAtivo.getListaAtivo());	
 			}
 		}
 	}

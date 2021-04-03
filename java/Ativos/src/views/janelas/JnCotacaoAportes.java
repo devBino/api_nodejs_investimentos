@@ -90,7 +90,7 @@ public class JnCotacaoAportes extends JInternalFrame {
 		lblOk.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null,"teste");
+				
 			}
 		});
 		lblOk.setBounds(158, 31, 69, 19);

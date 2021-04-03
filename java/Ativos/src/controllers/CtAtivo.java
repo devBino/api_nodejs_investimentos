@@ -20,7 +20,7 @@ public class CtAtivo {
 	public Ativo model;
 	
 	public CtAtivo() {
-		url = Parametros.baseUrl + "ativos";
+		url = Parametros.getBaseUrl() + "ativos";
 		dialogo = new DialogoUsuario();
 		parametrosUrl = new ParametrosUrl();
 		model = new Ativo();
@@ -58,7 +58,7 @@ public class CtAtivo {
 	
 	public ArrayList<TipoAtivo> listarCombo() {
 		
-		String urlTipoAtivos = Parametros.baseUrl + "tipoAtivos";
+		String urlTipoAtivos = Parametros.getBaseUrl() + "tipoAtivos";
 		Request req = new Request();
 		
 		String strLista = req.listar(urlTipoAtivos);

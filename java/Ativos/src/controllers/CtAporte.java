@@ -19,7 +19,7 @@ public class CtAporte {
 	public CtAporte() {
 		dialogo = new DialogoUsuario();
 		parametrosUrl = new ParametrosUrl();
-		url = Parametros.baseUrl + "aportes";
+		url = Parametros.getBaseUrl() + "aportes";
 	}
 	
 	public void salvar() {

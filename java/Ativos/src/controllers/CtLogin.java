@@ -18,7 +18,7 @@ public class CtLogin {
 	public CtLogin( String nome, String senha ) {
 		this.nome = nome;
 		this.senha = senha;
-		url = Parametros.baseUrl + "autenticacao";
+		url = Parametros.getBaseUrl() + "autenticacao";
 	}
 
 	public String getToken() {
