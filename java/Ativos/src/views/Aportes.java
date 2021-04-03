@@ -1,39 +1,43 @@
 package views;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import javax.swing.UIManager;
+import javax.swing.JInternalFrame;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.text.MaskFormatter;
+import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import java.text.ParseException;
 
 import views.janelas.JnHistoricoAportes;
 import views.janelas.JnLancamento;
 import views.janelas.JnCotacaoAportes;
 import views.janelas.PesquisaAtivo;
-
-import javax.swing.UIManager;
-import javax.swing.JInternalFrame;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
-import java.awt.Color;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-
 import repositories.DialogoUsuario;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import repositories.Numero;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Aportes extends JFrame {
 
@@ -47,7 +51,7 @@ public class Aportes extends JFrame {
 	private JTextField txtSubTotalMaiorIgual;
 	private JTextField txtSubTotalMenorIgual;
 	private JTextField txtTipoAtivo;
-	private JTextField textField;
+	private JTextField txtTxRetorno;
 	
 	public JnLancamento jnlancamento;
 	public JnCotacaoAportes jnCotacaoAportes;
@@ -55,6 +59,7 @@ public class Aportes extends JFrame {
 	public Boolean janelasAdicionadasInicio;
 	
 	private DialogoUsuario dialogo;
+	private Numero numero;
 	
 	/**
 	 * Launch the application.
@@ -74,11 +79,13 @@ public class Aportes extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public Aportes() {
+	public Aportes() throws ParseException {
 	
 		dialogo = new DialogoUsuario();
 		janelasAdicionadasInicio = false;
+		numero = new Numero();
 		
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
@@ -182,6 +189,13 @@ public class Aportes extends JFrame {
 		frameFiltro.getContentPane().add(lblValor);
 		
 		txtValorMaiorIgual = new JTextField();
+		txtValorMaiorIgual.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtValorMaiorIgual.setText( numero.getNumero( txtValorMaiorIgual.getText() ) );
+			}
+		});
+		
 		txtValorMaiorIgual.setBounds(10, 106, 146, 19);
 		frameFiltro.getContentPane().add(txtValorMaiorIgual);
 		txtValorMaiorIgual.setColumns(10);
@@ -191,6 +205,13 @@ public class Aportes extends JFrame {
 		frameFiltro.getContentPane().add(lblValor_1);
 		
 		txtValorMenorIgual = new JTextField();
+		txtValorMenorIgual.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtValorMenorIgual.setText( numero.getNumero( txtValorMenorIgual.getText() ) );
+			}
+		});
+		
 		txtValorMenorIgual.setBounds(10, 145, 146, 19);
 		frameFiltro.getContentPane().add(txtValorMenorIgual);
 		txtValorMenorIgual.setColumns(10);
@@ -200,6 +221,13 @@ public class Aportes extends JFrame {
 		frameFiltro.getContentPane().add(lblQtde);
 		
 		txtQtdeMaiorIgual = new JTextField();
+		txtQtdeMaiorIgual.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtQtdeMaiorIgual.setText( numero.getNumero( txtQtdeMaiorIgual.getText() ) );
+			}
+		});
+		
 		txtQtdeMaiorIgual.setBounds(10, 182, 146, 19);
 		frameFiltro.getContentPane().add(txtQtdeMaiorIgual);
 		txtQtdeMaiorIgual.setColumns(10);
@@ -209,6 +237,13 @@ public class Aportes extends JFrame {
 		frameFiltro.getContentPane().add(lblQtde_1);
 		
 		txtQtdeMenorIgual = new JTextField();
+		txtQtdeMenorIgual.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtQtdeMenorIgual.setText( numero.getNumero( txtQtdeMenorIgual.getText() ) );
+			}
+		});
+		
 		txtQtdeMenorIgual.setBounds(10, 220, 146, 19);
 		frameFiltro.getContentPane().add(txtQtdeMenorIgual);
 		txtQtdeMenorIgual.setColumns(10);
@@ -218,6 +253,13 @@ public class Aportes extends JFrame {
 		frameFiltro.getContentPane().add(lblSubtotal);
 		
 		txtSubTotalMaiorIgual = new JTextField();
+		txtSubTotalMaiorIgual.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtSubTotalMaiorIgual.setText( numero.getNumero( txtSubTotalMaiorIgual.getText() ) );
+			}
+		});
+		
 		txtSubTotalMaiorIgual.setBounds(10, 258, 146, 19);
 		frameFiltro.getContentPane().add(txtSubTotalMaiorIgual);
 		txtSubTotalMaiorIgual.setColumns(10);
@@ -227,6 +269,13 @@ public class Aportes extends JFrame {
 		frameFiltro.getContentPane().add(lblSubtotalMenorIgual);
 		
 		txtSubTotalMenorIgual = new JTextField();
+		txtSubTotalMenorIgual.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtSubTotalMenorIgual.setText( numero.getNumero( txtSubTotalMenorIgual.getText() ) );
+			}
+		});
+		
 		txtSubTotalMenorIgual.setBounds(10, 295, 146, 19);
 		frameFiltro.getContentPane().add(txtSubTotalMenorIgual);
 		txtSubTotalMenorIgual.setColumns(10);
@@ -235,7 +284,7 @@ public class Aportes extends JFrame {
 		lblDataInicio.setBounds(12, 314, 144, 15);
 		frameFiltro.getContentPane().add(lblDataInicio);
 		
-		JFormattedTextField txtDataInicio = new JFormattedTextField();
+		JFormattedTextField txtDataInicio = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		txtDataInicio.setBounds(10, 332, 146, 19);
 		frameFiltro.getContentPane().add(txtDataInicio);
 		
@@ -243,7 +292,7 @@ public class Aportes extends JFrame {
 		lblDataFim.setBounds(12, 351, 144, 15);
 		frameFiltro.getContentPane().add(lblDataFim);
 		
-		JFormattedTextField txtDataFim = new JFormattedTextField();
+		JFormattedTextField txtDataFim = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		txtDataFim.setBounds(10, 368, 146, 19);
 		frameFiltro.getContentPane().add(txtDataFim);
 		
@@ -274,10 +323,16 @@ public class Aportes extends JFrame {
 		lblSelTipoAtivo.setBounds(130, 63, 28, 19);
 		frameFiltro.getContentPane().add(lblSelTipoAtivo);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 404, 146, 19);
-		frameFiltro.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtTxRetorno = new JTextField();
+		txtTxRetorno.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtTxRetorno.setText( numero.getNumero( txtTxRetorno.getText() ) );
+			}
+		});
+		txtTxRetorno.setBounds(10, 404, 146, 19);
+		frameFiltro.getContentPane().add(txtTxRetorno);
+		txtTxRetorno.setColumns(10);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setBounds(10, 440, 146, 25);
@@ -286,8 +341,8 @@ public class Aportes extends JFrame {
 		JButton btnRestaurarJanelas = new JButton("Restaurar Janelas");
 		btnRestaurarJanelas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if( dialogo.confirmarAcao("Deseja restaurar as janelas??") ) {
-					adicionarJanelas();
+				if( dialogo.confirmarAcao("Deseja restaurar as janelas?? As informações em edição serão perdidas...") ) {
+					restaurarJanelas();
 				}
 			}
 		});
@@ -296,6 +351,14 @@ public class Aportes extends JFrame {
 		frameFiltro.setVisible(true);
 		
 		setLocationRelativeTo(null);
+	}
+
+	public void restaurarJanelas() {
+		jnlancamento.dispose();
+		jnCotacaoAportes.dispose();
+		jnHistoricoAportes.dispose();
+		
+		adicionarJanelas();
 	}
 	
 	public void adicionarJanelas() {

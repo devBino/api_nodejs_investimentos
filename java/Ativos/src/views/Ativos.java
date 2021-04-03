@@ -65,6 +65,7 @@ public class Ativos extends JFrame {
 	private DefaultTableModel model;
 	private DialogoUsuario dialogo = new DialogoUsuario();
 	private CtAtivo ctAtivo = new CtAtivo();
+	private Numero numero;
 	
 	private String idAtivo = "";
 	private int indexRegistro = 0;
@@ -89,6 +90,9 @@ public class Ativos extends JFrame {
 	 * Create the frame.
 	 */
 	public Ativos() {
+		
+		numero = new Numero();
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -129,8 +133,7 @@ public class Ativos extends JFrame {
 		txtValor.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				Numero num = new Numero(txtValor.getText());
-				txtValor.setText(num.getNumero());
+				txtValor.setText( numero.getNumero( txtValor.getText() ) );
 			}
 		});
 		txtValor.setBounds(445, 71, 160, 19);
@@ -165,8 +168,7 @@ public class Ativos extends JFrame {
 		txtTxAdministracao.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				Numero num = new Numero(txtTxAdministracao.getText());
-				txtTxAdministracao.setText(num.getNumero());
+				txtTxAdministracao.setText( numero.getNumero( txtTxAdministracao.getText() ));
 			}
 		});
 		txtTxAdministracao.setBounds(445, 101, 160, 19);
@@ -177,8 +179,7 @@ public class Ativos extends JFrame {
 		txtTxCustodia.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				Numero num = new Numero(txtTxCustodia.getText());
-				txtTxCustodia.setText( num.getNumero() );
+				txtTxCustodia.setText( numero.getNumero( txtTxCustodia.getText() ) );
 			}
 		});
 		
@@ -190,8 +191,7 @@ public class Ativos extends JFrame {
 		txtTxPerforamnce.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				Numero num = new Numero(txtTxPerforamnce.getText());
-				txtTxPerforamnce.setText( num.getNumero() );
+				txtTxPerforamnce.setText( numero.getNumero( txtTxPerforamnce.getText() ) );
 			}
 		});
 		txtTxPerforamnce.setBounds(445, 134, 160, 19);
@@ -300,10 +300,10 @@ public class Ativos extends JFrame {
 		
 		String[] params = new String[] {
 			txtNomeAtivo.getText(),
-			txtValor.getText(),
-			txtTxAdministracao.getText(),
-			txtTxCustodia.getText(),
-			txtTxPerforamnce.getText(),
+			txtValor.getText().replaceAll(",","."),
+			txtTxAdministracao.getText().replaceAll(",","."),
+			txtTxCustodia.getText().replaceAll(",","."),
+			txtTxPerforamnce.getText().replaceAll(",","."),
 			arrTipoAtivo[0].trim()
 		};
 		

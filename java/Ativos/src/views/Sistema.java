@@ -15,6 +15,7 @@ import repositories.DialogoUsuario;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import java.text.ParseException;
 
 import java.awt.Frame;
 
@@ -80,9 +81,13 @@ public class Sistema extends JFrame {
 		JMenuItem mntmAportes = new JMenuItem("Aportes");
 		mntmAportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Aportes ap = new Aportes();
-				ap.setVisible(true);
-				dispose();
+				try {
+					Aportes ap = new Aportes();
+					ap.setVisible(true);
+					dispose();
+				}catch(Exception err) {
+					err.printStackTrace();
+				}
 			}
 		});
 		mnLanamentos.add(mntmAportes);

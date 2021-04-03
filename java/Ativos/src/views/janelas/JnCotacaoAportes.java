@@ -21,9 +21,9 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 
 public class JnCotacaoAportes extends JInternalFrame {
-	private JTable table;
 	private JTextField txtValor;
 	private JTable table_1;
+	private JTextField txtAtivos;
 
 	/**
 	 * Launch the application.
@@ -51,51 +51,40 @@ public class JnCotacaoAportes extends JInternalFrame {
 		setBounds(320,10,520,251);
 		getContentPane().setLayout(null);
 		
-		JLabel lblSeleoDeAtivo = new JLabel("Marque Ativos");
-		lblSeleoDeAtivo.setBounds(12, 12, 124, 15);
-		getContentPane().add(lblSeleoDeAtivo);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 27, 124, 180);
-		getContentPane().add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
 		JLabel lblOpes = new JLabel("Opções");
-		lblOpes.setBounds(144, 12, 137, 15);
+		lblOpes.setBounds(12, 12, 137, 15);
 		getContentPane().add(lblOpes);
 		
 		JCheckBox checPrecoMedio = new JCheckBox("Considerar Preço Médio");
-		checPrecoMedio.setBounds(140, 62, 205, 23);
+		checPrecoMedio.setBounds(12, 77, 205, 23);
 		getContentPane().add(checPrecoMedio);
 		
 		JRadioButton rdbtnQuantasCotas = new JRadioButton("Cotar Maior Quantidade");
-		rdbtnQuantasCotas.setBounds(140, 87, 201, 23);
+		rdbtnQuantasCotas.setBounds(12, 102, 201, 23);
 		getContentPane().add(rdbtnQuantasCotas);
 		
 		JLabel lblValor = new JLabel("Valor");
-		lblValor.setBounds(144, 39, 48, 15);
+		lblValor.setBounds(12, 33, 48, 15);
 		getContentPane().add(lblValor);
 		
 		txtValor = new JTextField();
-		txtValor.setBounds(194, 35, 90, 19);
+		txtValor.setBounds(62, 31, 90, 19);
 		getContentPane().add(txtValor);
 		txtValor.setColumns(10);
 		
 		JRadioButton rdbtnQualValor = new JRadioButton("Cotar Menor Quantidade");
-		rdbtnQualValor.setBounds(140, 115, 201, 23);
+		rdbtnQualValor.setBounds(12, 130, 201, 23);
 		getContentPane().add(rdbtnQualValor);
 		
 		JRadioButton rdbtnCotarMaiorCusto = new JRadioButton("Cotar Maior Custo");
-		rdbtnCotarMaiorCusto.setBounds(140, 142, 197, 23);
+		rdbtnCotarMaiorCusto.setBounds(12, 157, 197, 23);
 		getContentPane().add(rdbtnCotarMaiorCusto);
 		
 		JRadioButton rdbtnCotarMenorCusto = new JRadioButton("Cotar Menor Custo");
-		rdbtnCotarMenorCusto.setBounds(140, 169, 201, 23);
+		rdbtnCotarMenorCusto.setBounds(12, 184, 201, 23);
 		getContentPane().add(rdbtnCotarMenorCusto);
 		
-		JLabel lblOk = new JLabel("OK");
+		JLabel lblOk = new JLabel("Calcular");
 		lblOk.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblOk.setBackground(SystemColor.textInactiveText);
 		lblOk.addMouseListener(new MouseAdapter() {
@@ -104,19 +93,35 @@ public class JnCotacaoAportes extends JInternalFrame {
 				JOptionPane.showMessageDialog(null,"teste");
 			}
 		});
-		lblOk.setBounds(290, 35, 35, 19);
+		lblOk.setBounds(158, 31, 69, 19);
 		getContentPane().add(lblOk);
 		
 		JLabel lblResultados = new JLabel("Resultados");
-		lblResultados.setBounds(353, 12, 145, 15);
+		lblResultados.setBounds(251, 12, 247, 15);
 		getContentPane().add(lblResultados);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(353, 28, 145, 179);
+		scrollPane_1.setBounds(251, 28, 247, 179);
 		getContentPane().add(scrollPane_1);
 		
 		table_1 = new JTable();
 		scrollPane_1.setViewportView(table_1);
+		
+		JLabel lblAtivos = new JLabel("Ativos");
+		lblAtivos.setBounds(12, 54, 48, 15);
+		getContentPane().add(lblAtivos);
+		
+		txtAtivos = new JTextField();
+		txtAtivos.setEnabled(false);
+		txtAtivos.setBounds(62, 52, 90, 19);
+		getContentPane().add(txtAtivos);
+		txtAtivos.setColumns(10);
+		
+		JLabel lblBuscarAtivos = new JLabel("Buscar");
+		lblBuscarAtivos.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblBuscarAtivos.setBackground(Color.GRAY);
+		lblBuscarAtivos.setBounds(158, 51, 69, 19);
+		getContentPane().add(lblBuscarAtivos);
 
 	}
 }

@@ -82,9 +82,9 @@ public class JnHistoricoAportes extends JInternalFrame {
 		btnFiltrar.setBounds(267, 10, 83, 25);
 		getContentPane().add(btnFiltrar);
 		
-		JButton btnMaisFiltros = new JButton("Mais Filtros");
-		btnMaisFiltros.setBounds(450, 10, 117, 25);
-		getContentPane().add(btnMaisFiltros);
+		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.setBounds(450, 10, 117, 25);
+		getContentPane().add(btnDeletar);
 
 		
 		
