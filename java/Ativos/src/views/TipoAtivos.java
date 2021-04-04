@@ -121,6 +121,7 @@ public class TipoAtivos extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setShowGrid(false);
 		
 		table.addKeyListener(new KeyAdapter() {
 			@Override

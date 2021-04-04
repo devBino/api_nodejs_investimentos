@@ -32,4 +32,27 @@ public class Aporte {
 		return nomesCampos;
 	}
 	
+	public String[] getCamposApi(String opcaoId) {
+		if( opcaoId != null ) {
+			return new String[] {
+				"id",
+				"cdAtivo",
+				"vlAporte",
+				"qtde",
+				"subTotal",
+				"dtAporte",
+				"taxaRetorno"
+			};
+		}else {
+			return new String[] {
+				"cdAtivo",
+				"vlAporte",
+				"qtde",
+				"subTotal",
+				"dtAporte",
+				"taxaRetorno"
+			};
+		}
+	}
+	
 }

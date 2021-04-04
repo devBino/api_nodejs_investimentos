@@ -112,13 +112,17 @@ public class Aportes extends JFrame {
 		JButton btnLanamentos = new JButton("Lançamentos");
 		btnLanamentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if( !jnlancamento.isVisible() ) {
-				
-					jnlancamento = new JnLancamento();
-					desktopPane.add(jnlancamento);
-					jnlancamento.setVisible(true);
-					jnlancamento.setBounds(10, 10, 306, 251);
+				try {
+					if( !jnlancamento.isVisible() ) {
 					
+						jnlancamento = new JnLancamento();
+						desktopPane.add(jnlancamento);
+						jnlancamento.setVisible(true);
+						jnlancamento.setBounds(10, 10, 306, 251);
+						
+					}
+				}catch(Exception err) {
+					err.printStackTrace();
 				}
 			}
 		});
@@ -359,8 +363,12 @@ public class Aportes extends JFrame {
 		JButton btnRestaurarJanelas = new JButton("Restaurar Janelas");
 		btnRestaurarJanelas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if( dialogo.confirmarAcao("Deseja restaurar as janelas?? As informações em edição serão perdidas...") ) {
-					restaurarJanelas();
+				try {
+					if( dialogo.confirmarAcao("Deseja restaurar as janelas?? As informações em edição serão perdidas...") ) {
+						restaurarJanelas();
+					}
+				}catch(Exception err) {
+					err.printStackTrace();
 				}
 			}
 		});
@@ -371,7 +379,7 @@ public class Aportes extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	public void restaurarJanelas() {
+	public void restaurarJanelas() throws ParseException {
 		jnlancamento.dispose();
 		jnCotacaoAportes.dispose();
 		jnHistoricoAportes.dispose();
@@ -379,7 +387,7 @@ public class Aportes extends JFrame {
 		adicionarJanelas();
 	}
 	
-	public void adicionarJanelas() {
+	public void adicionarJanelas() throws ParseException {
 
 		if( janelasAdicionadasInicio ) {
 			

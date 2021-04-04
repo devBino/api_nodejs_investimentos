@@ -26,9 +26,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 import controllers.CtAtivo;
 import controllers.CtTipoAtivo;
@@ -37,12 +44,7 @@ import models.TipoAtivo;
 import parametros.Parametros;
 import repositories.DialogoUsuario;
 import repositories.Numero;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+
 
 public class Ativos extends JFrame {
 
@@ -243,6 +245,7 @@ public class Ativos extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setShowGrid(false);
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {

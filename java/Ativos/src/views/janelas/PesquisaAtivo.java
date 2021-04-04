@@ -22,11 +22,12 @@ import controllers.CtTipoAtivo;
 import controllers.CtAtivo;
 import repositories.DialogoUsuario;
 import javax.swing.ListSelectionModel;
+import javax.swing.DropMode;
 
 public class PesquisaAtivo extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtDescricao;
 	private JTable table;
 	private CtAtivo ctAtivo;
 	private CtTipoAtivo ctTipoAtivo;
@@ -96,10 +97,10 @@ public class PesquisaAtivo extends JFrame {
 		lblDescrioTipoativo.setBounds(12, 72, 150, 15);
 		contentPane.add(lblDescrioTipoativo);
 		
-		textField = new JTextField();
-		textField.setBounds(160, 70, 186, 19);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtDescricao = new JTextField();
+		txtDescricao.setBounds(160, 70, 186, 19);
+		contentPane.add(txtDescricao);
+		txtDescricao.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
@@ -115,6 +116,7 @@ public class PesquisaAtivo extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setShowGrid(false);
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPane.setViewportView(table);
 		
@@ -166,6 +168,7 @@ public class PesquisaAtivo extends JFrame {
 						lista.get(i)[1]
 				});
 			}
+			
 		}else if( rdbtnPesquisarAtivos.isSelected() ) {
 			
 			setarModelTabela(2);
@@ -177,6 +180,7 @@ public class PesquisaAtivo extends JFrame {
 						lista.get(i)[0],
 						lista.get(i)[1]
 				});
+				
 			}
 		}
 	}

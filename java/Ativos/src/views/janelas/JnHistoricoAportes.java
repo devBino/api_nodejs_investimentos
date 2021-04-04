@@ -6,27 +6,32 @@ import javax.swing.JInternalFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import java.util.List;
 import java.util.ArrayList;
 
-import controllers.CtAporte;
-import models.Aporte;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.text.DecimalFormat;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import controllers.CtAporte;
+import models.Aporte;
 import repositories.DialogoUsuario;
+import repositories.Numero;
+
 
 public class JnHistoricoAportes extends JInternalFrame {
 
 	public static JTable table;
 	
-	private CtAporte ctAporte;
-	private Aporte mdAporte;
-	private DefaultTableModel model;
+	private static CtAporte ctAporte;
+	private static Aporte mdAporte;
+	private static DefaultTableModel model;
 	private JTextField txtNomeAtivo;
 	private DialogoUsuario dialogo;
 
@@ -66,6 +71,8 @@ public class JnHistoricoAportes extends JInternalFrame {
 		getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.setShowGrid(false);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers( mdAporte.getArrayNomesCampos() );
 		table.setModel(model);
@@ -100,20 +107,21 @@ public class JnHistoricoAportes extends JInternalFrame {
 		
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int i = table.getSelectedRow();
-				model.removeRow(i);
+			public void actionPerformed(ActionEvent e) {				
+				deletar();
 			}
 		});
 		btnDeletar.setBounds(450, 10, 117, 25);
 		getContentPane().add(btnDeletar);
 
-		
-		
 		listar();
+		
 	}
 	
-	public void listar() {
+	public static void listar() {
+		
+		DecimalFormat df = new DecimalFormat("0.#####");
+		Numero numero = new Numero();
 		
 		model.setNumRows(0);
 		
@@ -123,9 +131,9 @@ public class JnHistoricoAportes extends JInternalFrame {
 			model.addRow(new String[] {
 					lista.get(i)[0],
 					lista.get(i)[8],
-					lista.get(i)[2],
+					numero.getNumeroContabil( lista.get(i)[2] ),
 					lista.get(i)[3],
-					lista.get(i)[4],
+					numero.getNumeroContabil( lista.get(i)[4] ),
 					lista.get(i)[5].substring(0,10),
 					lista.get(i)[6],
 			});
@@ -162,4 +170,30 @@ public class JnHistoricoAportes extends JInternalFrame {
 			txtNomeAtivo.requestFocus();
 		}
 	}
+	
+	
+	public void deletar() {
+		if( model.getRowCount() > 0 ) {
+			
+			if( dialogo.confirmarAcao("Deseja deletar o(s) registro(s) selecionado(s)??") ) {
+				int[] linhas = table.getSelectedRows();
+				
+				String[] ids = new String[linhas.length];
+				
+				int controleIds = 0;
+				
+				for(Integer indice : linhas) {
+					ids[controleIds] = model.getValueAt(indice,0).toString();
+					controleIds += 1;
+				}
+				
+				ctAporte.deletar(ids);
+				listar();
+			}
+			
+		}else {
+			dialogo.aviso("Por favor atualize a tabela, selecione registros e tente novamente...");
+		}
+	}
+	
 }
