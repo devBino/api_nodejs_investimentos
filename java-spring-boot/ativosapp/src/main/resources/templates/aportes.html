@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<title>Cadastro Ativos</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		
+	</head>
+	<body>
+		<div class="container">
+			<h1>Listagem Ativos</h1>
+		
+			<hr>
+			
+			<h3>Opções</h3>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="btn-group">
+						<a href="/sistema" class="btn btn-secondary btn-sm">Menu Inicial</a><br>
+						<a href="/" class="btn btn-secondary btn-sm">Login</a><br>
+					</div>
+				</div>
+			</div>
+			
+			<hr>
+		
+			<table class="table table-bordered">
+				<thead>
+					<th>ID</th>
+					<th>ATIVO</th>
+					<th>VALOR</th>
+					<th>QUANTIDADE</th>
+					<th>SUB TOTAL</th>
+					<th>DATA</th>
+					<th>TX.RETORNO</th>
+				</thead>
+				<tbody>
+					<tr th:each="lista : ${lista}" >
+						<td><span th:text="${lista[0]}"></span></td>
+						<td><span th:text="${lista[1]}"></span></td>
+						<td><span th:text="${lista[2]}"></span></td>
+						<td><span th:text="${lista[3]}" ></span></td>
+						<td><span th:text="${lista[4]}" ></span></td>
+						<td><span th:text="${lista[5]}" ></span></td>
+						<td><span th:text="${lista[6]}" ></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
