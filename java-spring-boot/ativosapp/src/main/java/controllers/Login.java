@@ -38,7 +38,7 @@ public class Login {
 		
 		if( resposta.contains("\"auth\":true") ) {
 			Sessao.setToken(resposta);
-			return "redirect:sistema";	
+			return "redirect:/sistema";	
 		}else {
 			return "redirect:/erroLogin";
 		}

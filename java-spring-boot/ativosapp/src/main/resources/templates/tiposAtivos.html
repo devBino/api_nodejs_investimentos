@@ -16,27 +16,40 @@
 			<h3>Opções</h3>
 
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-5">
 					<div class="btn-group">
-						<a href="/sistema" class="btn btn-secondary btn-sm">Menu Inicial</a><br>
-						<a href="/" class="btn btn-secondary btn-sm">Login</a><br>
+						<a href="/sistema" class="btn btn-secondary btn-sm ml-1">Menu Inicial</a><br>
+						<a href="/tiposAtivos" class="btn btn-info btn-sm ml-1">Listar Tipos de Ativos</a><br>
+						<a href="/ativos" class="btn btn-secondary btn-sm ml-1">Listar Ativos</a><br>
+						<a href="/aportes" class="btn btn-secondary btn-sm ml-1">Listar Aportes</a>
+						<a href="/" class="btn btn-secondary btn-sm ml-1">Login</a>
 					</div>
 				</div>
 			</div>
 			
 			<hr>
 		
-			<table>
+			<table class="table table-bordered">
 				<thead>
 					<th>ID</th>
 					<th>TIPO ATIVO</th>
 					<th>STATUS</th>
+					<th></th>
 				</thead>
 				<tbody>
 					<tr th:each="lista : ${lista}" >
 						<td><span th:text="${lista[0]}"></span></td>
 						<td><span th:text="${lista[1]}"></span></td>
 						<td><span th:text="${lista[2]}"></span></td>
+						<td>
+							<a
+								th:href="${(#mvc.url('TA#deletarTipoAtivo').arg(0,lista[0])).build()}"
+								class="btn btn-danger btn-sm"
+							>
+							X
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
