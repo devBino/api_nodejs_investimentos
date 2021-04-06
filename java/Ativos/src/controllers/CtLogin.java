@@ -1,11 +1,7 @@
 package controllers;
 
-import repositories.Request;
-import models.Auth;
 import parametros.Parametros;
-
-//https://medium.com/programmers-blockchain/importing-gson-into-eclipse-ec8cf678ad52
-import com.google.gson.Gson;
+import repositories.Request;
 
 public class CtLogin {
 
@@ -32,12 +28,13 @@ public class CtLogin {
 			
 			mensagem = req.mensagem;
 			
-			Gson gson = new Gson();
-			Auth auth  = gson.fromJson(resposta,Auth.class);
+			String[] arrResposta = resposta.split(",");
+			String strToken = arrResposta[1].replace("\"token\":\"","");
+			strToken = strToken.replace("\"}","");
 			
-			token = auth.token;
+			token = strToken;
 			
-			if( auth.auth ) {
+			if( resposta.contains("\"auth\":true") ) {
 				return true;
 			}else {
 				return false;
