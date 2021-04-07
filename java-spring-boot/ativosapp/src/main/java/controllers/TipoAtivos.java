@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import repositories.Configs;
 import repositories.Request;
 import repositories.StringRegistros;
+import repositories.ParametrosUrl;
+import models.TipoAtivo;
 
 @Controller
 public class TipoAtivos {
@@ -29,6 +33,18 @@ public class TipoAtivos {
 		model.addAttribute("lista",lista);
 		
 		return new ModelAndView("tiposAtivos");
+	}
+
+	@RequestMapping("/salvarTipoAtivo")
+	public String salvarTipoAtivo(@RequestParam String tipoAtivo) {
+		
+		Request req = new Request();
+		
+		String params = ParametrosUrl.prepareParamsUrl(new String[] {tipoAtivo}, TipoAtivo.getCampos() );
+		String resposta = req.postRequest(Configs.getBaseUrl() + recurso, params);
+				
+		return "redirect:/tiposAtivos";
+		
 	}
 	
 	@RequestMapping("/deletarTipoAtivo/{id}")

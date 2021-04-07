@@ -9,26 +9,41 @@
 		
 		<div class="container">
 			
-			<h1>Listagem de Tipos de Ativos</h1>
-		
-			<hr>
-			
-			<h3>Opções</h3>
-
-			<div class="row">
-				<div class="col-sm-7"></div>
+			<div class="row mt-2">
+				<div class="col-sm-7">
+					<h3 class="text text-info">Cadastro de Ativos</h3>
+				</div>
 				<div class="col-sm-5">
 					<div class="btn-group">
 						<a href="/sistema" class="btn btn-secondary btn-sm ml-1">Menu Inicial</a><br>
-						<a href="/tiposAtivos" class="btn btn-info btn-sm ml-1">Listar Tipos de Ativos</a><br>
-						<a href="/ativos" class="btn btn-secondary btn-sm ml-1">Listar Ativos</a><br>
-						<a href="/aportes" class="btn btn-secondary btn-sm ml-1">Listar Aportes</a>
+						<a href="/tiposAtivos" class="btn btn-info btn-sm ml-1">Tipos de Ativos</a><br>
+						<a href="/ativos" class="btn btn-secondary btn-sm ml-1">Ativos</a><br>
+						<a href="/aportes" class="btn btn-secondary btn-sm ml-1">Aportes</a>
+						<a href="/cotacao" class="btn btn-secondary btn-sm ml-1">Cotação</a>
 						<a href="/" class="btn btn-secondary btn-sm ml-1">Login</a>
 					</div>
 				</div>
 			</div>
 			
 			<hr>
+			<h4 class="text text-info">Cadastrar Novo</h4>
+
+			<form action="/salvarTipoAtivo" method="POST" class="form">
+				<div class="row">
+					<div class="col-sm-3">
+						<label>Tipo Ativo</label>
+					</div>
+					<div class="col-sm-7">
+						<input type="text" name="tipoAtivo" class="form-control form-control-sm" autofocus="true">
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success btn-sm">Salvar</button>
+					</div>
+				</div>			
+			</form>
+			
+			<hr>
+			<h4 class="text text-info">Listagem</h4>
 		
 			<table class="table table-bordered">
 				<thead>
