@@ -13,11 +13,12 @@ public class Aporte {
 		
 		campos.put("0", "ID;cdAporte");
 		campos.put("1", "ATIVO;nmAtivo");
-		campos.put("2", "VALOR;vlAporte");
-		campos.put("3", "QTDE;qtde");
-		campos.put("4", "SUBTOTAL;subTotal");
-		campos.put("5", "DATA;dtAporte");
-		campos.put("6", "TAXA RETORNO;taxaRetorno");
+		campos.put("2", "TIPO;nmTipo");
+		campos.put("3", "VALOR;vlAporte");
+		campos.put("4", "QTDE;qtde");
+		campos.put("5", "SUBTOTAL;subTotal");
+		campos.put("6", "DATA;dtAporte");
+		campos.put("7", "TAXA RETORNO;taxaRetorno");
 
 	}
 	

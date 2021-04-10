@@ -31,7 +31,7 @@ public class JnHistoricoAportes extends JInternalFrame {
 	
 	private static CtAporte ctAporte;
 	private static Aporte mdAporte;
-	private static DefaultTableModel model;
+	public static DefaultTableModel model;
 	private JTextField txtNomeAtivo;
 	private DialogoUsuario dialogo;
 
@@ -127,10 +127,18 @@ public class JnHistoricoAportes extends JInternalFrame {
 		
 		ArrayList<String[]> lista = ctAporte.listar();
 		
+		/*
+		 * variavel criada para fins de testes, até que seja implementada
+		 * na API o retorno do campo tipo ativo 
+		*/		
+		String testeTipo;
+		
 		for( int i=0; i<lista.size(); i++ ) {
+			testeTipo = ( (i % 2) == 0 ) ? "renda fixa" : "renda variavel";
 			model.addRow(new String[] {
 					lista.get(i)[0],
 					lista.get(i)[8],
+					testeTipo,
 					numero.getNumeroContabil( lista.get(i)[2] ),
 					lista.get(i)[3],
 					numero.getNumeroContabil( lista.get(i)[4] ),
@@ -140,7 +148,7 @@ public class JnHistoricoAportes extends JInternalFrame {
 		}
 		
 	}
-	
+
 	public void filtrarNomeAtivo() {
 		if( !txtNomeAtivo.getText().isEmpty() ) {
 			

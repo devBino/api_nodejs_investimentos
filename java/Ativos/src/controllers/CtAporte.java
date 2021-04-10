@@ -1,15 +1,18 @@
 package controllers;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
-import models.Sessao;
+import javax.swing.table.DefaultTableModel;
+
 import models.Aporte;
 import parametros.Parametros;
 import repositories.DialogoUsuario;
-import repositories.StringRegistros;
-import repositories.Request;
+import repositories.FiltroHistorico;
 import repositories.ParametrosUrl;
+import repositories.Request;
+import repositories.StringRegistros;
 
 public class CtAporte {
 
@@ -17,6 +20,7 @@ public class CtAporte {
 	public ParametrosUrl parametrosUrl;
 	public String url;
 	public Aporte mdAporte;
+	public FiltroHistorico filtro;
 	
 	public CtAporte() {
 		dialogo = new DialogoUsuario();
@@ -64,6 +68,21 @@ public class CtAporte {
 		StringRegistros strRegistros = new StringRegistros(strLista);
 		
 		return strRegistros.getListaRegistros();
+	}
+	
+	public DefaultTableModel filtrar(DefaultTableModel modelParam, Map<String,String> params) {
+		
+		filtro = new FiltroHistorico(modelParam);
+		
+		if( !params.get("ativos").isEmpty() ) {
+			filtro.filtrarAtivos( params.get("ativos") );
+		}
+		
+		if( !params.get("tipos").isEmpty() ) {
+			filtro.filtrarTipos( params.get("tipos") );
+		}
+		
+		return filtro.getModel();
 	}
 	
 }

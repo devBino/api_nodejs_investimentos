@@ -10,6 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,14 +32,19 @@ import javax.swing.JDesktopPane;
 
 import java.text.ParseException;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import views.janelas.JnHistoricoAportes;
 import views.janelas.JnLancamento;
 import views.janelas.JnCotacaoAportes;
 import views.janelas.PesquisaAtivo;
+
+import controllers.CtAporte;
+
 import repositories.DialogoUsuario;
 import repositories.Numero;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+
 
 public class Aportes extends JFrame {
 
@@ -62,6 +69,7 @@ public class Aportes extends JFrame {
 	
 	private DialogoUsuario dialogo;
 	private Numero numero;
+	private CtAporte ctAporte;
 	
 	public static String listaAuxiliarTiposAtivos; 
 	
@@ -90,6 +98,7 @@ public class Aportes extends JFrame {
 		dialogo = new DialogoUsuario();
 		janelasAdicionadasInicio = false;
 		numero = new Numero();
+		ctAporte = new CtAporte();
 		listaAuxiliarTiposAtivos = "";
 		
 		setResizable(false);
@@ -357,6 +366,11 @@ public class Aportes extends JFrame {
 		txtTxRetorno.setColumns(10);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filtrarHistorico();
+			}
+		});
 		btnFiltrar.setBounds(10, 440, 146, 25);
 		frameFiltro.getContentPane().add(btnFiltrar);
 		
@@ -430,5 +444,16 @@ public class Aportes extends JFrame {
 			
 		}
 	}
+	
+	public void filtrarHistorico() {
+		
+		Map<String,String> params = new HashMap<String,String>();
+		
+		params.put("ativos",txtAtivos.getText());
+		params.put("tipos",txtTipoAtivo.getText());
+		
+		JnHistoricoAportes.table.setModel( ctAporte.filtrar( JnHistoricoAportes.model, params ) );
+	}
+	
 	
 }
