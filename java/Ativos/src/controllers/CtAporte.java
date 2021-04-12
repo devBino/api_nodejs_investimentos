@@ -75,11 +75,67 @@ public class CtAporte {
 		filtro = new FiltroHistorico(modelParam);
 		
 		if( !params.get("ativos").isEmpty() ) {
-			filtro.filtrarAtivos( params.get("ativos") );
+			filtro.ativos( params.get("ativos") );
 		}
 		
 		if( !params.get("tipos").isEmpty() ) {
-			filtro.filtrarTipos( params.get("tipos") );
+			filtro.tipos( params.get("tipos") );
+		}
+		
+		if( !params.get("valorMaiorIgual").isEmpty() ) {
+			if( !params.get("valorMaiorIgual").replace(",",".").equals("0.00") ) {
+				filtro.valorMaiorIgual( params.get("valorMaiorIgual") );
+			}
+		}
+		
+		if( !params.get("valorMenorIgual").isEmpty() ) {
+			if( !params.get("valorMenorIgual").replace(",",".").equals("0.00") ) {
+				filtro.valorMenorIgual( params.get("valorMenorIgual") );
+			}
+		}
+		
+		if( !params.get("qtdeMaiorIgual").isEmpty() ) {
+			String[] arrQtde = params.get("qtdeMaiorIgual").split(",");
+			if( !params.get("qtdeMaiorIgual").replace(",",".").equals("0.00") ) {
+				filtro.qtdeMaiorIgual(arrQtde[0]);
+			}
+		}
+		
+		if( !params.get("qtdeMenorIgual").isEmpty() ) {
+			String[] arrQtde = params.get("qtdeMenorIgual").split(",");
+			if( !params.get("qtdeMenorIgual").replace(",",".").equals("0.00") ) {
+				filtro.qtdeMenorIgual(arrQtde[0]);
+			}
+		}
+		
+		if( !params.get("subTotalMaiorIgual").isEmpty() ) {
+			if( !params.get("subTotalMaiorIgual").replace(",",".").equals("0.00") ) {
+				filtro.subTotalMaiorIgual(params.get("subTotalMaiorIgual"));
+			}
+		}
+		
+		if( !params.get("subTotalMenorIgual").isEmpty() ) {
+			if( !params.get("subTotalMenorIgual").replace(",",".").equals("0.00") ) {
+				filtro.subTotalMenorIgual(params.get("subTotalMenorIgual"));
+			}
+		}
+		
+		if( !params.get("dataInicio").isEmpty() ) {
+			if( !params.get("dataInicio").replace("/","").trim().isEmpty() ) {
+				filtro.dataMaiorIgual(params.get("dataInicio"));
+			}
+		}
+		
+		if( !params.get("dataFim").isEmpty() ) {
+			if( !params.get("dataFim").replace("/","").trim().isEmpty() ) {
+				filtro.dataMenorIgual(params.get("dataFim"));
+			}
+		}
+		
+		if( !params.get("taxaRetorno").isEmpty() ) {
+			if( !params.get("taxaRetorno").replace(",",".").equals("0.00") ) {
+				filtro.taxaMenorIgual(params.get("taxaRetorno"));
+			}
 		}
 		
 		return filtro.getModel();

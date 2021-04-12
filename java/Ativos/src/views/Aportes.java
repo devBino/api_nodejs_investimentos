@@ -62,6 +62,9 @@ public class Aportes extends JFrame {
 	private JTextField txtSubTotalMenorIgual;
 	private JTextField txtTxRetorno;
 	
+	private JFormattedTextField txtDataInicio;
+	private JFormattedTextField txtDataFim;
+	
 	public JnLancamento jnlancamento;
 	public JnCotacaoAportes jnCotacaoAportes;
 	public JnHistoricoAportes jnHistoricoAportes;
@@ -327,16 +330,16 @@ public class Aportes extends JFrame {
 		JLabel lblDataInicio = new JLabel("Data Inicio");
 		lblDataInicio.setBounds(12, 314, 144, 15);
 		frameFiltro.getContentPane().add(lblDataInicio);
-		
-		JFormattedTextField txtDataInicio = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		 
+		txtDataInicio = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		txtDataInicio.setBounds(10, 332, 146, 19);
 		frameFiltro.getContentPane().add(txtDataInicio);
 		
 		JLabel lblDataFim = new JLabel("Data Fim");
 		lblDataFim.setBounds(12, 351, 144, 15);
 		frameFiltro.getContentPane().add(lblDataFim);
-		
-		JFormattedTextField txtDataFim = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		 
+		txtDataFim = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		txtDataFim.setBounds(10, 368, 146, 19);
 		frameFiltro.getContentPane().add(txtDataFim);
 		
@@ -451,6 +454,15 @@ public class Aportes extends JFrame {
 		
 		params.put("ativos",txtAtivos.getText());
 		params.put("tipos",txtTipoAtivo.getText());
+		params.put("valorMaiorIgual", txtValorMaiorIgual.getText());
+		params.put("valorMenorIgual", txtValorMenorIgual.getText());
+		params.put("qtdeMaiorIgual", txtQtdeMaiorIgual.getText());
+		params.put("qtdeMenorIgual", txtQtdeMenorIgual.getText());
+		params.put("subTotalMaiorIgual", txtSubTotalMaiorIgual.getText());
+		params.put("subTotalMenorIgual", txtSubTotalMenorIgual.getText());
+		params.put("dataInicio", txtDataInicio.getText());
+		params.put("dataFim", txtDataFim.getText());
+		params.put("taxaRetorno", txtTxRetorno.getText());
 		
 		JnHistoricoAportes.table.setModel( ctAporte.filtrar( JnHistoricoAportes.model, params ) );
 	}

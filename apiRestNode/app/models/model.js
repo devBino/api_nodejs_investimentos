@@ -59,6 +59,14 @@ class Model{
         }
     }
 
+    addSql(newStringSql){
+        if( this._sqlQuery !== null ){
+            this._sqlQuery = `${this._sqlQuery} ${newStringSql}`
+        }else{
+            this._sqlQuery = newStringSql
+        }
+    }
+
 
 }
 

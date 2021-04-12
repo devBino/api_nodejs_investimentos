@@ -10,8 +10,15 @@ class Aporte extends Model{
         this.campos = ['cdAporte','cdAtivo','vlAporte','qtde','subTotal','dtAporte','taxaRetorno','cdStatus']
     }
 
-    setSqlQuery(){
-        this._sqlQuery = 'select a.*,at.nmAtivo from aporte a inner join ativo at on(a.cdAtivo=at.cdAtivo)'
+    async setSqlQuery(){
+        
+        this.addSql(' select ')
+        this.addSql(' a.*,at.nmAtivo,ta.nmTipo ')
+        this.addSql(' from ')
+        this.addSql(' aporte a ')
+        this.addSql(' inner join ativo at on(a.cdAtivo=at.cdAtivo) ')
+        this.addSql(' inner join tipo_ativo ta on(at.cdTipo=ta.cdTipo)  ')
+
     }
 
     setSqlInsert(){

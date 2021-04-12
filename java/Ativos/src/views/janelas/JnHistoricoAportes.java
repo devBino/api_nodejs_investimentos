@@ -23,6 +23,7 @@ import controllers.CtAporte;
 import models.Aporte;
 import repositories.DialogoUsuario;
 import repositories.Numero;
+import repositories.Data;
 
 
 public class JnHistoricoAportes extends JInternalFrame {
@@ -127,25 +128,23 @@ public class JnHistoricoAportes extends JInternalFrame {
 		
 		ArrayList<String[]> lista = ctAporte.listar();
 		
-		/*
-		 * variavel criada para fins de testes, até que seja implementada
-		 * na API o retorno do campo tipo ativo 
-		*/		
-		String testeTipo;
-		
 		for( int i=0; i<lista.size(); i++ ) {
-			testeTipo = ( (i % 2) == 0 ) ? "renda fixa" : "renda variavel";
+		
+			Data dt = new Data(lista.get(i)[5].substring(0,10));
+			
 			model.addRow(new String[] {
 					lista.get(i)[0],
 					lista.get(i)[8],
-					testeTipo,
+					lista.get(i)[9],
 					numero.getNumeroContabil( lista.get(i)[2] ),
 					lista.get(i)[3],
 					numero.getNumeroContabil( lista.get(i)[4] ),
-					lista.get(i)[5].substring(0,10),
+					dt.formataDataDiaMesAno(),
 					lista.get(i)[6],
 			});
 		}
+		
+		table.setModel(model);
 		
 	}
 

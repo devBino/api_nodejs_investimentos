@@ -14,7 +14,7 @@ public class StringRegistros {
 	}
 	
 	public String[] getRegistros() {
-
+		
 		//pega posição inicia de [{ e final em }] para pegar o que veio na chave data do json na API
 		int posiciaoInicio	= this.strJson.indexOf("[{") + 1;
 		int posicaoFinal	= this.strJson.indexOf("}]") + 1;
@@ -40,6 +40,10 @@ public class StringRegistros {
 		ArrayList<String[]> arrReturn = new ArrayList<String[]>();
 		
 		for(String str : this.getRegistros()) {
+			
+			if( str.isEmpty() ) {
+				continue;
+			}
 			
 			String[] arrStr = str.split(",");
 			String[] arrLinha = new String[arrStr.length];
