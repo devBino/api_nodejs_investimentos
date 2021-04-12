@@ -397,11 +397,28 @@ public class Aportes extends JFrame {
 	}
 
 	public void restaurarJanelas() throws ParseException {
+		
+		limparCampos();
+		
 		jnlancamento.dispose();
 		jnCotacaoAportes.dispose();
 		jnHistoricoAportes.dispose();
 		
 		adicionarJanelas();
+	}
+	
+	public void limparCampos() {
+		txtAtivos.setText("");
+		txtTipoAtivo.setText("");
+		txtValorMaiorIgual.setText("");
+		txtValorMenorIgual.setText("");
+		txtQtdeMaiorIgual.setText("");
+		txtQtdeMenorIgual.setText("");
+		txtSubTotalMaiorIgual.setText("");
+		txtSubTotalMenorIgual.setText("");
+		txtDataInicio.setText("");
+		txtDataFim.setText("");
+		txtTxRetorno.setText("");
 	}
 	
 	public void adicionarJanelas() throws ParseException {
