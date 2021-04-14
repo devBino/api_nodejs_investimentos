@@ -156,6 +156,7 @@ public class PesquisaAtivo extends JFrame {
 	}
 	
 	public void listar() {
+		
 		if( rdbtnPesquisarTipos.isSelected() ) {
 			
 			setarModelTabela(1);
@@ -163,10 +164,12 @@ public class PesquisaAtivo extends JFrame {
 			ArrayList<String[]> lista = ctTipoAtivo.listar();
 			
 			for(int i=0; i<lista.size(); i++) {
-				modelTipoAtivos.addRow(new Object[] {
-						lista.get(i)[0],
-						lista.get(i)[1]
-				});
+				if( lista.get(i)[1].toLowerCase().contains(txtDescricao.getText().toLowerCase()) ) {
+					modelTipoAtivos.addRow(new Object[] {
+							lista.get(i)[0],
+							lista.get(i)[1]
+					});
+				}
 			}
 			
 		}else if( rdbtnPesquisarAtivos.isSelected() ) {
@@ -176,11 +179,12 @@ public class PesquisaAtivo extends JFrame {
 			ArrayList<String[]> lista = ctAtivo.listar();
 			
 			for(int i=0; i<lista.size(); i++) {
-				modelAtivos.addRow(new Object[] {
-						lista.get(i)[0],
-						lista.get(i)[1]
-				});
-				
+				if(  lista.get(i)[1].toLowerCase().contains(txtDescricao.getText().toLowerCase()) ) {
+					modelAtivos.addRow(new Object[] {
+							lista.get(i)[0],
+							lista.get(i)[1]
+					});
+				}
 			}
 		}
 	}
@@ -220,6 +224,8 @@ public class PesquisaAtivo extends JFrame {
 			}else if( opcao == 2 ) {
 				views.Aportes.txtAtivos.setText(models.PesquisaAtivo.getListaAtivo());	
 			}
+		}else if( opcaoJanela.equals("views.janelas.JnCotacaoAportes") ) {
+			views.janelas.JnCotacaoAportes.txtAtivos.setText(models.PesquisaAtivo.getListaAtivo());
 		}
 	}
 

@@ -178,8 +178,8 @@ public class JnHistoricoAportes extends JInternalFrame {
 		}
 	}
 	
-	
 	public void deletar() {
+		
 		if( model.getRowCount() > 0 ) {
 			
 			if( dialogo.confirmarAcao("Deseja deletar o(s) registro(s) selecionado(s)??") ) {
@@ -190,7 +190,7 @@ public class JnHistoricoAportes extends JInternalFrame {
 				int controleIds = 0;
 				
 				for(Integer indice : linhas) {
-					ids[controleIds] = model.getValueAt(indice,0).toString();
+					ids[controleIds] = table.getValueAt(indice,0).toString();
 					controleIds += 1;
 				}
 				
