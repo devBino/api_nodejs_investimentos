@@ -219,13 +219,14 @@ public class JnLancamento extends JInternalFrame {
 		String[] arrAtivo = cbxAtivo.getSelectedItem().toString().split("-");
 		
 		Data dt = new Data(txtData.getText());
+		String paramData = txtData.getText().replace("/","").trim();
 		
 		String[] params = new String[] {
 			arrAtivo[0].toString(),
 			txtValor.getText().replace(",","."),
 			txtQtde.getText().replace(",","."),
 			txtSubTotal.getText().replace(",","."),
-			dt.getData(),
+			( paramData.isEmpty() ) ? "" : dt.getData(),
 			txtTxRetorno.getText().replace(",",".")
 		};
 		

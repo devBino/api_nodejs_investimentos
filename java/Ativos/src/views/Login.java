@@ -1,7 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,19 +7,24 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Color;
+
 import java.io.UnsupportedEncodingException;
+
 import java.security.NoSuchAlgorithmException;
 
-import javax.swing.ImageIcon;
-import java.awt.Color;
 import views.Sistema;
 import controllers.CtLogin;
 import models.Sessao;
@@ -85,7 +88,7 @@ public class Login extends JFrame {
 		contentPane.add(lblRealizeSeuLogin);
 		
 		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(27, 119, 70, 15);
+		lblLogin.setBounds(27, 128, 70, 15);
 		contentPane.add(lblLogin);
 		
 		txtLogin = new JTextField();
@@ -125,11 +128,11 @@ public class Login extends JFrame {
 		txtSenha.setBounds(27, 184, 211, 19);
 		contentPane.add(txtSenha);
 		
-		JLabel lblTeste = new JLabel("Teste");
-		lblTeste.setIcon(new ImageIcon("/home/os-61879/eclipse-workspace/Ativos/imgLogin.jpeg"));
-		lblTeste.setBounds(256, 39, 250, 211);
-		contentPane.add(lblTeste);
-
+		JLabel lblImagem = new JLabel();
+		lblImagem.setIcon( new ImageIcon("imagens/telaLogin.jpeg") );
+		lblImagem.setBounds(256, 39, 250, 211);
+		contentPane.add(lblImagem);
+		
 		setLocationRelativeTo(null);
 	}
 	

@@ -10,12 +10,18 @@ public class PesquisaAtivo {
 	protected PesquisaAtivo() {}
 	
 	public static void setListaAtivo(ArrayList<String[]> lista) {
+		
+		listaAtivo = "";
+		
 		for(int i=0; i<lista.size(); i++) {
 			String sinal = ( i == lista.size() - 1 ) ? "" : "&";
 			listaAtivo += lista.get(i)[0] +"@"+lista.get(i)[1]+sinal;
 		}
 	}
 	public static void setListaTipoAtivo(ArrayList<String[]> lista) {
+		
+		listaTipoAtivo = "";
+		
 		for(int i=0; i<lista.size(); i++) {
 			String sinal = ( i == lista.size() - 1 ) ? "" : "&";
 			listaTipoAtivo += lista.get(i)[0]+"@"+lista.get(i)[1]+sinal;

@@ -142,7 +142,7 @@ public class TipoAtivos extends JFrame {
 		
 		model = new DefaultTableModel();
 		
-		Object[] colunas = {"ID","ATIVO","SITUAÇÃO"};
+		Object[] colunas = {"ID","TIPO ATIVO","SITUAÇÃO"};
 		Object[] linhas = new Object[0];
 		
 		model.setColumnIdentifiers(colunas);

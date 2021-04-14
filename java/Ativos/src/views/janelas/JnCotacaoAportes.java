@@ -1,7 +1,5 @@
 package views.janelas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
@@ -12,18 +10,34 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.SystemColor;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
+import java.awt.EventQueue;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
+import controllers.CtAporte;
+import repositories.Numero;
+import repositories.DialogoUsuario;
 
 public class JnCotacaoAportes extends JInternalFrame {
+	
 	private JTextField txtValor;
-	private JTable table_1;
-	private JTextField txtAtivos;
+	private JTable table;
+	public static JTextField txtAtivos;
+	private DefaultTableModel model;
+	
+	private Numero numero;
+	private CtAporte ctAporte;
+	private DialogoUsuario dialogo;
+	
 
 	/**
 	 * Launch the application.
@@ -45,6 +59,11 @@ public class JnCotacaoAportes extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public JnCotacaoAportes() {
+		
+		numero = new Numero();
+		ctAporte = new CtAporte();
+		dialogo = new DialogoUsuario();
+		
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Cotação de Aportes");
@@ -64,11 +83,17 @@ public class JnCotacaoAportes extends JInternalFrame {
 		getContentPane().add(rdbtnQuantasCotas);
 		
 		JLabel lblValor = new JLabel("Valor");
-		lblValor.setBounds(12, 33, 48, 15);
+		lblValor.setBounds(12, 58, 48, 15);
 		getContentPane().add(lblValor);
 		
 		txtValor = new JTextField();
-		txtValor.setBounds(62, 31, 90, 19);
+		txtValor.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtValor.setText( numero.getNumero( txtValor.getText() ) );
+			}
+		});
+		txtValor.setBounds(60, 54, 90, 19);
 		getContentPane().add(txtValor);
 		txtValor.setColumns(10);
 		
@@ -90,37 +115,61 @@ public class JnCotacaoAportes extends JInternalFrame {
 		lblOk.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				if( txtValor.getText().isEmpty() || txtValor.getText().replace(",",".").equals("0.00") ) {
+					dialogo.aviso("Por Favor, informe um Valor...");
+					txtValor.requestFocus();
+				}else {
+					
+				}
 			}
 		});
-		lblOk.setBounds(158, 31, 69, 19);
+		lblOk.setBounds(154, 54, 69, 19);
 		getContentPane().add(lblOk);
 		
 		JLabel lblResultados = new JLabel("Resultados");
-		lblResultados.setBounds(251, 12, 247, 15);
+		lblResultados.setBounds(233, 12, 265, 15);
 		getContentPane().add(lblResultados);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(251, 28, 247, 179);
-		getContentPane().add(scrollPane_1);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(233, 28, 265, 179);
+		getContentPane().add(scrollPane);
 		
-		table_1 = new JTable();
-		scrollPane_1.setViewportView(table_1);
+		table = new JTable();
+		
+		model = new DefaultTableModel();
+		model.setColumnIdentifiers( new Object[] {"ATIVO","VALOR","QTDE","SUBTOTAL"} );
+		table.setModel(model);
+		scrollPane.setViewportView(table);
 		
 		JLabel lblAtivos = new JLabel("Ativos");
-		lblAtivos.setBounds(12, 54, 48, 15);
+		lblAtivos.setBounds(12, 34, 48, 15);
 		getContentPane().add(lblAtivos);
 		
 		txtAtivos = new JTextField();
 		txtAtivos.setEnabled(false);
-		txtAtivos.setBounds(62, 52, 90, 19);
+		txtAtivos.setBounds(60, 32, 90, 19);
 		getContentPane().add(txtAtivos);
 		txtAtivos.setColumns(10);
 		
 		JLabel lblBuscarAtivos = new JLabel("Buscar");
+		lblBuscarAtivos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PesquisaAtivo p = new PesquisaAtivo();
+	
+				p.opcaoJanela = "views.janelas.JnCotacaoAportes";
+				
+				p.rdbtnPesquisarAtivos.setSelected(true);
+				p.rdbtnPesquisarTipos.setSelected(false);
+				p.rdbtnPesquisarAtivos.setEnabled(false);
+				p.rdbtnPesquisarTipos.setEnabled(false);
+				
+				p.show();
+			}
+		});
 		lblBuscarAtivos.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblBuscarAtivos.setBackground(Color.GRAY);
-		lblBuscarAtivos.setBounds(158, 51, 69, 19);
+		lblBuscarAtivos.setBounds(154, 32, 69, 19);
 		getContentPane().add(lblBuscarAtivos);
 
 	}
