@@ -13,15 +13,24 @@ import models.Sessao;
 public class Request {
 	
 	public String mensagem = "";
-	private HashMap<String,String> fields = new HashMap<String,String>();
+	public String mensagemApi = "";
+	private HashMap<String,String> fields;
+	
+	public Request() {
+		mensagem = "";
+		mensagemApi = "";
+		fields = new HashMap<String,String>();
+	}
 	
 	public String getRequest(String strUrl) {
 		try {
 			URL url = new URL(strUrl);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			
+			mensagemApi = con.getResponseMessage();
+			
 			if( con.getResponseCode() != 200 ) {
-				this.mensagem = "Erro ao conectar com a API...";
+				mensagem = "Erro ao conectar com a API...";
 				return null;
 			}
 			
@@ -32,7 +41,7 @@ public class Request {
 			
 			return strJson;
 		}catch(Exception e) {
-			this.mensagem = "Erro: "+e.getMessage();
+			mensagem = "Erro: "+e.getMessage();
 			return null;
 		}
 	}
@@ -53,8 +62,7 @@ public class Request {
 		    out.write(params);
 		    out.flush();
 		    
-		    /*System.out.println(con.getResponseCode());
-		    System.out.println(con.getResponseMessage());*/
+		    mensagemApi = con.getResponseMessage();
 		    
 			if( con.getResponseCode() != 200 ) {
 				this.mensagem = "Erro ao conectar com a API...";
@@ -62,7 +70,7 @@ public class Request {
 			}
 			
 			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
-			String strJson = this.requestToJson(resposta);
+			String strJson = requestToJson(resposta);
 			
 			out.close();
 		    con.disconnect();
@@ -70,7 +78,7 @@ public class Request {
 			return strJson;
 			
 		}catch(Exception e) {
-			this.mensagem = "Erro: "+e.getMessage();
+			mensagem = "Erro: "+e.getMessage();
 			return null;
 		}
 	}
@@ -91,16 +99,15 @@ public class Request {
 		    out.write(params);
 		    out.flush();
 		    
-		    /*System.out.println(con.getResponseCode());
-		    System.out.println(con.getResponseMessage());*/
+		    mensagemApi = con.getResponseMessage();
 		    
 			if( con.getResponseCode() != 200 ) {
-				this.mensagem = "Erro ao conectar com a API...";
+				mensagem = "Erro ao conectar com a API...";
 				return null;
 			}
 			
 			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
-			String strJson = this.requestToJson(resposta);
+			String strJson = requestToJson(resposta);
 			
 			out.close();
 		    con.disconnect();
@@ -124,22 +131,21 @@ public class Request {
 			con.addRequestProperty("x-access-token", Sessao.token);
 			con.connect();
 			
-		    /*System.out.println(con.getResponseCode());
-		    System.out.println(con.getResponseMessage());*/
+		    mensagemApi = con.getResponseMessage();
 		    
 			if( con.getResponseCode() != 200 ) {
-				this.mensagem = "Erro ao conectar com a API...";
+				mensagem = "Erro ao conectar com a API...";
 				return null;
 			}
 			
 			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
-			String strJson = this.requestToJson(resposta);
+			String strJson = requestToJson(resposta);
 			
 		    con.disconnect();
 		    
 			return strJson;
 		}catch(Exception e) {
-			this.mensagem = "Erro: "+e.getMessage();
+			mensagem = "Erro: "+e.getMessage();
 			return null;
 		}
 	}
@@ -156,23 +162,22 @@ public class Request {
 			con.addRequestProperty("x-access-token", Sessao.token);
 			con.connect();
 			
-		    /*System.out.println(con.getResponseCode());
-		    System.out.println(con.getResponseMessage());*/
+		    mensagemApi = con.getResponseMessage();
 		    
 			if( con.getResponseCode() != 200 ) {
-				this.mensagem = "Erro ao conectar com a API...";
+				mensagem = "Erro ao conectar com a API...";
 				return null;
 			}
 			
 			BufferedReader resposta = new BufferedReader( new InputStreamReader( con.getInputStream() ) );
-			String strJson = this.requestToJson(resposta);
+			String strJson = requestToJson(resposta);
 			
 		    con.disconnect();
 		    
 			return strJson;
 			
 		}catch(Exception e) {
-			this.mensagem = "Erro: "+e.getMessage();
+			mensagem = "Erro: "+e.getMessage();
 			return null;
 		}
 	}

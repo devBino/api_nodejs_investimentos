@@ -116,7 +116,6 @@ public class PesquisaAtivo extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
-		table.setShowGrid(false);
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPane.setViewportView(table);
 		

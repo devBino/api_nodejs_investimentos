@@ -25,6 +25,8 @@ import controllers.CtAporte;
 import repositories.Numero;
 import repositories.DialogoUsuario;
 import repositories.Data;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class JnLancamento extends JInternalFrame {
 	
@@ -65,7 +67,7 @@ public class JnLancamento extends JInternalFrame {
 		ctAporte = new CtAporte();
 		numero = new Numero();
 		
-		setBorder(UIManager.getBorder("InternalFrame.border"));
+		setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
 		setTitle("Lançar Aportes");
 		setClosable(true);
 		setIconifiable(true);

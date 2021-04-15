@@ -24,6 +24,8 @@ import models.Aporte;
 import repositories.DialogoUsuario;
 import repositories.Numero;
 import repositories.Data;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 
 public class JnHistoricoAportes extends JInternalFrame {
@@ -56,6 +58,7 @@ public class JnHistoricoAportes extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public JnHistoricoAportes() {
+		setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
 		
 		ctAporte = new CtAporte();
 		mdAporte = new Aporte();
@@ -72,7 +75,6 @@ public class JnHistoricoAportes extends JInternalFrame {
 		getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setShowGrid(false);
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers( mdAporte.getArrayNomesCampos() );
