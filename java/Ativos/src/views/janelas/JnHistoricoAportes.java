@@ -26,6 +26,7 @@ import repositories.Numero;
 import repositories.Data;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 
 public class JnHistoricoAportes extends JInternalFrame {
@@ -82,12 +83,13 @@ public class JnHistoricoAportes extends JInternalFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.setBackground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listar();
 			}
 		});
-		btnAtualizar.setBounds(351, 10, 98, 25);
+		btnAtualizar.setBounds(508, 10, 98, 25);
 		getContentPane().add(btnAtualizar);
 		
 		JLabel lblNomeAtivo = new JLabel("Nome Ativo");
@@ -100,6 +102,7 @@ public class JnHistoricoAportes extends JInternalFrame {
 		txtNomeAtivo.setColumns(10);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setBackground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filtrarNomeAtivo();
@@ -109,13 +112,24 @@ public class JnHistoricoAportes extends JInternalFrame {
 		getContentPane().add(btnFiltrar);
 		
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.setBackground(UIManager.getColor("OptionPane.warningDialog.titlePane.shadow"));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				deletar();
 			}
 		});
-		btnDeletar.setBounds(450, 10, 117, 25);
+		btnDeletar.setBounds(607, 10, 117, 25);
 		getContentPane().add(btnDeletar);
+		
+		JButton btnTodos = new JButton("Selecionar Todos");
+		btnTodos.setBackground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
+		btnTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selecionarTodos();
+			}
+		});
+		btnTodos.setBounds(351, 10, 156, 25);
+		getContentPane().add(btnTodos);
 
 		listar();
 		
@@ -203,6 +217,10 @@ public class JnHistoricoAportes extends JInternalFrame {
 		}else {
 			dialogo.aviso("Por favor atualize a tabela, selecione registros e tente novamente...");
 		}
+	}
+	
+	public void selecionarTodos() {
+		table.setRowSelectionInterval(0, table.getRowCount() - 1);
 	}
 	
 }

@@ -149,6 +149,7 @@ public class JnLancamento extends JInternalFrame {
 		txtTxRetorno.setColumns(10);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setBackground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				salvar();
@@ -158,6 +159,7 @@ public class JnLancamento extends JInternalFrame {
 		getContentPane().add(btnSalvar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBackground(UIManager.getColor("OptionPane.warningDialog.titlePane.shadow"));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpar(true);

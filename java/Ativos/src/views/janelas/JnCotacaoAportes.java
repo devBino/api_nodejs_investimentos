@@ -24,6 +24,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ import controllers.CtAporte;
 import controllers.CtCotacao;
 import repositories.Numero;
 import repositories.DialogoUsuario;
+import repositories.TableOrdem;
 
 public class JnCotacaoAportes extends JInternalFrame {
 	
@@ -39,10 +42,17 @@ public class JnCotacaoAportes extends JInternalFrame {
 	public static JTextField txtAtivos;
 	private DefaultTableModel model;
 	
+	private JRadioButton radioCotarMaiorQtdeCotas;
+	private JRadioButton radioCotarMenorQtdeCotas;
+	private JRadioButton radioCotarMaiorCusto;
+	private JRadioButton radioCotarMenorCusto;
+	
 	private Numero numero;
 	private CtAporte ctAporte;
 	private CtCotacao cotacao;
 	private DialogoUsuario dialogo;
+	private String[] colunasModel;
+	private String radioEscolhido;
 	
 
 	/**
@@ -65,12 +75,15 @@ public class JnCotacaoAportes extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public JnCotacaoAportes() {
+		
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
 		
 		numero = new Numero();
 		ctAporte = new CtAporte();
 		cotacao = new CtCotacao();
 		dialogo = new DialogoUsuario();
+		radioEscolhido = "";
+		colunasModel = new String[] {"ATIVO","VALOR","QTDE","SUBTOTAL","PROVENTO","TOTAL PROVENTOS"};
 		
 		setClosable(true);
 		setIconifiable(true);
@@ -78,9 +91,14 @@ public class JnCotacaoAportes extends JInternalFrame {
 		setBounds(320,10,520,251);
 		getContentPane().setLayout(null);
 		
-		JRadioButton rdbtnQuantasCotas = new JRadioButton("Cotar Maior Quantidade");
-		rdbtnQuantasCotas.setBounds(55, 35, 201, 23);
-		getContentPane().add(rdbtnQuantasCotas);
+		radioCotarMaiorQtdeCotas = new JRadioButton("Cotar Maior Quantidade");
+		radioCotarMaiorQtdeCotas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checarRadio("cotarMaiorQtdeCotas");
+			}
+		});
+		radioCotarMaiorQtdeCotas.setBounds(55, 35, 201, 23);
+		getContentPane().add(radioCotarMaiorQtdeCotas);
 		
 		JLabel lblValor = new JLabel("Valor");
 		lblValor.setBounds(227, 12, 48, 15);
@@ -97,17 +115,32 @@ public class JnCotacaoAportes extends JInternalFrame {
 		getContentPane().add(txtValor);
 		txtValor.setColumns(10);
 		
-		JRadioButton rdbtnQualValor = new JRadioButton("Cotar Menor Quantidade");
-		rdbtnQualValor.setBounds(55, 62, 201, 23);
-		getContentPane().add(rdbtnQualValor);
+		radioCotarMenorQtdeCotas = new JRadioButton("Cotar Menor Quantidade");
+		radioCotarMenorQtdeCotas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checarRadio("cotarMenorQtdeCotas");
+			}
+		});
+		radioCotarMenorQtdeCotas.setBounds(55, 62, 201, 23);
+		getContentPane().add(radioCotarMenorQtdeCotas);
 		
-		JRadioButton rdbtnCotarMaiorCusto = new JRadioButton("Cotar Maior Custo");
-		rdbtnCotarMaiorCusto.setBounds(273, 35, 197, 23);
-		getContentPane().add(rdbtnCotarMaiorCusto);
+		radioCotarMaiorCusto = new JRadioButton("Cotar Maior Custo");
+		radioCotarMaiorCusto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checarRadio("cotarMaiorCusto");
+			}
+		});
+		radioCotarMaiorCusto.setBounds(273, 35, 197, 23);
+		getContentPane().add(radioCotarMaiorCusto);
 		
-		JRadioButton rdbtnCotarMenorCusto = new JRadioButton("Cotar Menor Custo");
-		rdbtnCotarMenorCusto.setBounds(273, 62, 201, 23);
-		getContentPane().add(rdbtnCotarMenorCusto);
+		radioCotarMenorCusto = new JRadioButton("Cotar Menor Custo");
+		radioCotarMenorCusto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checarRadio("cotarMenorCusto");
+			}
+		});
+		radioCotarMenorCusto.setBounds(273, 62, 201, 23);
+		getContentPane().add(radioCotarMenorCusto);
 		
 		JLabel lblOk = new JLabel("Calcular");
 		lblOk.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -143,7 +176,7 @@ public class JnCotacaoAportes extends JInternalFrame {
 			}
 		});
 		model = new DefaultTableModel();
-		model.setColumnIdentifiers( new Object[] {"ATIVO","VALOR","QTDE","SUBTOTAL","PROVENTO","TOTAL PROVENTOS"} );
+		model.setColumnIdentifiers( colunasModel );
 		table.setModel(model);
 		scrollPane.setViewportView(table);
 		
@@ -219,12 +252,16 @@ public class JnCotacaoAportes extends JInternalFrame {
 			Double subTotal = Double.parseDouble(strQtde) * Double.parseDouble(valorCotacao);
 			
 			arrLinha[0] = ativos.get(i)[1];
-			arrLinha[1] = valorCotacao;
+			arrLinha[1] = String.format("%.2f",Double.parseDouble(valorCotacao));
 			arrLinha[2] = strQtde;
-			arrLinha[3] = subTotal.toString();
+			arrLinha[3] = String.format("%.2f",subTotal);
 			
 			model.addRow(arrLinha);
 			
+		}
+		
+		if( !radioEscolhido.isEmpty() ) {
+			ordenar();
 		}
 		
 	}
@@ -244,6 +281,64 @@ public class JnCotacaoAportes extends JInternalFrame {
 		}catch(Exception e) {
 			
 		}
+	}
+
+	public void checarRadio(String strRadio) {
+		
+		radioEscolhido = strRadio;
+				
+		radioCotarMaiorQtdeCotas.setSelected(false);
+		radioCotarMenorQtdeCotas.setSelected(false);
+		radioCotarMaiorCusto.setSelected(false);
+		radioCotarMenorCusto.setSelected(false);
+		
+		switch(strRadio) {
+		
+			case "cotarMaiorQtdeCotas":
+				radioCotarMaiorQtdeCotas.setSelected(true);
+				break;
+			case "cotarMenorQtdeCotas":
+				radioCotarMenorQtdeCotas.setSelected(true);
+				break;
+			case "cotarMaiorCusto":
+				radioCotarMaiorCusto.setSelected(true);
+				break;
+			case "cotarMenorCusto":
+				radioCotarMenorCusto.setSelected(true);
+				break;
+			default:
+				radioCotarMaiorQtdeCotas.setSelected(true);
+				radioEscolhido = "cotarMenorQtdeCotas";
+				break;
+				
+		}
+		
+	}
+	
+	public void ordenar() {
+		
+		TableOrdem tb = new TableOrdem(model, colunasModel);
+		
+		switch(radioEscolhido) {
+			case "cotarMaiorQtdeCotas":
+				tb.modelDesc(2);
+				break;
+			case "cotarMenorQtdeCotas":
+				tb.modelAsc(2);
+				break;
+			case "cotarMaiorCusto":
+				tb.modelDesc(3);
+				break;
+			case "cotarMenorCusto":
+				tb.modelAsc(3);
+				break;
+			default:
+				tb.modelAsc(2);
+				break;
+		}
+		
+		table.setModel( tb.getModel() );
+		
 	}
 	
 }
