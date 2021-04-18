@@ -83,7 +83,6 @@ public class JnHistoricoAportes extends JInternalFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.setBackground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listar();
@@ -102,7 +101,6 @@ public class JnHistoricoAportes extends JInternalFrame {
 		txtNomeAtivo.setColumns(10);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
-		btnFiltrar.setBackground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filtrarNomeAtivo();
@@ -112,7 +110,6 @@ public class JnHistoricoAportes extends JInternalFrame {
 		getContentPane().add(btnFiltrar);
 		
 		JButton btnDeletar = new JButton("Deletar");
-		btnDeletar.setBackground(UIManager.getColor("OptionPane.warningDialog.titlePane.shadow"));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				deletar();
@@ -122,7 +119,6 @@ public class JnHistoricoAportes extends JInternalFrame {
 		getContentPane().add(btnDeletar);
 		
 		JButton btnTodos = new JButton("Selecionar Todos");
-		btnTodos.setBackground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
 		btnTodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selecionarTodos();

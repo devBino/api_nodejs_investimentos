@@ -122,7 +122,6 @@ public class Aportes extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnLanamentos = new JButton("Lançamentos");
-		btnLanamentos.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnLanamentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -143,7 +142,6 @@ public class Aportes extends JFrame {
 		contentPane.add(btnLanamentos);
 		
 		JButton btnHistorico = new JButton("Histórico");
-		btnHistorico.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !jnHistoricoAportes.isVisible() ) {
@@ -158,7 +156,6 @@ public class Aportes extends JFrame {
 		contentPane.add(btnHistorico);
 		
 		JButton btnCotarAportes = new JButton("Cotar Aportes");
-		btnCotarAportes.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnCotarAportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !jnCotacaoAportes.isVisible() ) {
@@ -210,7 +207,6 @@ public class Aportes extends JFrame {
 			}
 		});
 		lblSelAtivo.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblSelAtivo.setBackground(UIManager.getColor("Button.darkShadow"));
 		lblSelAtivo.setBounds(130, 31, 28, 19);
 		frameFiltro.getContentPane().add(lblSelAtivo);
 		
@@ -229,7 +225,6 @@ public class Aportes extends JFrame {
 			}
 		});
 		lblSelTipoAtivo.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblSelTipoAtivo.setBackground(UIManager.getColor("Button.darkShadow"));
 		lblSelTipoAtivo.setBounds(130, 63, 28, 19);
 		frameFiltro.getContentPane().add(lblSelTipoAtivo);
 		
