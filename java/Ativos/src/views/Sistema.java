@@ -115,6 +115,13 @@ public class Sistema extends JFrame {
 		});
 		
 		JMenuItem mntmAcompanharRetorno = new JMenuItem("Acompanhar Retorno");
+		mntmAcompanharRetorno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Acompanhamento a = new Acompanhamento();
+				a.setVisible(true);
+				dispose();
+			}
+		});
 		mntmAcompanharRetorno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		mnCotacoes.add(mntmAcompanharRetorno);
 		mnCotacoes.add(mntmCotaes);
@@ -128,7 +135,6 @@ public class Sistema extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Sobre sb = new Sobre();
 				sb.setVisible(true);
-				dispose();
 			}
 		});
 		mnMais.add(mntmSobre);
@@ -167,7 +173,8 @@ public class Sistema extends JFrame {
 				dispose();
 			}
 		});
-		lblTipoAtivos.setIcon(new ImageIcon("imagens/tipoAtivos.png"));
+		
+		lblTipoAtivos.setIcon( new ImageIcon( getClass().getResource("/imagens/tipoAtivos.png") ) );
 		lblTipoAtivos.setBounds(30, 64, 154, 129);
 		getContentPane().add(lblTipoAtivos);
 		
@@ -184,7 +191,8 @@ public class Sistema extends JFrame {
 				dispose();
 			}
 		});
-		lblAtivos.setIcon(new ImageIcon("imagens/ativos.png"));
+		
+		lblAtivos.setIcon(new ImageIcon(getClass().getResource("/imagens/ativos.png")));
 		lblAtivos.setBounds(231, 64, 135, 129);
 		getContentPane().add(lblAtivos);
 		
@@ -205,7 +213,8 @@ public class Sistema extends JFrame {
 				}
 			}
 		});
-		lblAportes.setIcon(new ImageIcon("imagens/aportes.png"));
+		
+		lblAportes.setIcon(new ImageIcon(getClass().getResource("/imagens/aportes.png")));
 		lblAportes.setBounds(399, 64, 154, 129);
 		getContentPane().add(lblAportes);
 		
@@ -214,7 +223,15 @@ public class Sistema extends JFrame {
 		getContentPane().add(lblMenuAcompanhamento);
 		
 		JLabel lblAcompanhamento = new JLabel("");
-		lblAcompanhamento.setIcon(new ImageIcon("imagens/andamento.png"));
+		lblAcompanhamento.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Acompanhamento a = new Acompanhamento();
+				a.setVisible(true);
+				dispose();
+			}
+		});
+		lblAcompanhamento.setIcon(new ImageIcon(getClass().getResource("/imagens/andamento.png")));
 		lblAcompanhamento.setBounds(33, 253, 154, 129);
 		getContentPane().add(lblAcompanhamento);
 		
@@ -231,7 +248,8 @@ public class Sistema extends JFrame {
 				dispose();
 			}
 		});
-		lblCotacao.setIcon(new ImageIcon("imagens/cotacao.png"));
+		
+		lblCotacao.setIcon(new ImageIcon(getClass().getResource("/imagens/cotacao.png")));
 		lblCotacao.setBounds(215, 253, 154, 129);
 		getContentPane().add(lblCotacao);
 		
@@ -245,10 +263,10 @@ public class Sistema extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				Sobre sb = new Sobre();
 				sb.setVisible(true);
-				dispose();
 			}
 		});
-		lblSobre.setIcon(new ImageIcon("imagens/sobre.png"));
+		
+		lblSobre.setIcon(new ImageIcon(getClass().getResource("/imagens/sobre.png")));
 		lblSobre.setBounds(396, 253, 154, 129);
 		getContentPane().add(lblSobre);
 		
@@ -263,7 +281,7 @@ public class Sistema extends JFrame {
 				retornarLogin();
 			}
 		});
-		lblLogin.setIcon(new ImageIcon("imagens/login.png"));
+		lblLogin.setIcon(new ImageIcon(getClass().getResource("/imagens/login.png")));
 		lblLogin.setBounds(1010, 64, 154, 129);
 		getContentPane().add(lblLogin);
 		
@@ -278,7 +296,7 @@ public class Sistema extends JFrame {
 				fecharAplicacao();
 			}
 		});
-		lblEncerrar.setIcon(new ImageIcon("imagens/encerrar.png"));
+		lblEncerrar.setIcon(new ImageIcon(getClass().getResource("/imagens/encerrar.png")));
 		lblEncerrar.setBounds(1013, 253, 154, 129);
 		getContentPane().add(lblEncerrar);
 		

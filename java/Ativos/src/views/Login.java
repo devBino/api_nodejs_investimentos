@@ -129,7 +129,7 @@ public class Login extends JFrame {
 		contentPane.add(txtSenha);
 		
 		JLabel lblImagem = new JLabel();
-		lblImagem.setIcon( new ImageIcon("imagens/telaLogin.jpeg") );
+		lblImagem.setIcon( new ImageIcon(getClass().getResource("/imagens/telaLogin.jpeg")) );
 		lblImagem.setBounds(256, 39, 250, 211);
 		contentPane.add(lblImagem);
 		
